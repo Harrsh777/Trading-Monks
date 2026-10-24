@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Italiana&display=swap");
+
+/* -------------------------------------------------------------------------- */
+/* Minimalist Luxury Pitch-Black Intro Screen                                  */
+/* -------------------------------------------------------------------------- */
+
+.tm-minimal-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  box-shadow: -40px 0 80px rgba(0, 0, 0, 0.95);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tm-loader-dismissing {
+  pointer-events: none;
+}
+
+.tm-minimal-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+}
+
+.tm-minimal-title {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: clamp(40px, 7vw, 104px);
+  font-family: "Italiana", "Cinzel", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: clamp(0.12em, 1.6vw, 0.26em);
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+}
+
+.tm-minimal-char-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1.15;
+  padding-block: 6px;
+}
+
+.tm-minimal-letter {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tm-minimal-title {
+    font-size: clamp(30px, 9vw, 52px);
+    letter-spacing: 0.14em;
+    white-space: normal;
+    max-width: 90vw;
+  }
+}
