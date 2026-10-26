@@ -652,6 +652,27 @@ address {
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Animated cinematic dark backdrop layer behind hero text */
+.tm-hero-dark-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 85% at 20% 50%, rgba(8, 9, 11, 0.88) 0%, rgba(8, 9, 11, 0.65) 45%, rgba(8, 9, 11, 0.15) 75%, transparent 100%),
+    linear-gradient(90deg, rgba(8, 9, 11, 0.78) 0%, rgba(8, 9, 11, 0.5) 35%, rgba(8, 9, 11, 0.12) 60%, transparent 80%);
+  opacity: 0;
+  transform: translate3d(-15px, 0, 0);
+  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.tm-hero-dark-layer.is-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 /* Layered overlays to blend the artwork seamlessly while keeping it bright & visible */
 .tm-hero-overlay {
   position: absolute;
@@ -743,6 +764,14 @@ address {
   gap: 24px;
   color: rgba(255, 255, 255, 0.7);
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+}
+
+.tm-hero-top.is-active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .tm-hero-copy {
@@ -757,21 +786,41 @@ address {
   text-shadow: 0 4px 28px rgba(0, 0, 0, 0.95), 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
-.tm-hero-title .tm-line {
+.tm-hero-split-line {
   display: block;
-  overflow: hidden;
+  overflow: visible;
   padding-bottom: 0.04em;
 }
 
-.tm-hero-title .tm-line>span {
+.tm-hero-split-line .split-parent {
   display: inline-block;
-  transform-origin: 0 100%;
-  will-change: transform;
+  vertical-align: top;
+}
+
+.tm-hero-split-line .split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.tm-hero-split-line .split-word {
+  display: inline-block;
+}
+
+.tm-hero-placeholder {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tm-hero-support-wrap {
+  margin-top: clamp(18px, 2.4vw, 30px);
+  max-width: 54ch;
+}
+
+.tm-hero-support-wrap .split-parent {
+  display: block;
 }
 
 .tm-hero-support {
-  margin-top: 36px;
-  max-width: 52ch;
   color: rgba(255, 255, 255, 0.92);
   font-size: clamp(16px, 1.25vw, 19px);
   line-height: 1.65;
@@ -783,7 +832,15 @@ address {
   flex-wrap: wrap;
   align-items: center;
   gap: 18px;
-  margin-top: 44px;
+  margin-top: clamp(26px, 3.2vw, 42px);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+
+.tm-hero-buttons.is-active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Ticker */
@@ -1033,19 +1090,19 @@ address {
 /* ========================================================================== */
 
 /* ========================================================================== */
-/* 03 — The Monk's Philosophy (18cm Screen Fit, Modern Cards & Grey Emblem)  */
+/* 03 — The Monk's Philosophy (25cm Screen Fit & Pinned Scroll-Draw Emblem)   */
 /* ========================================================================== */
 
 .tm-philosophy {
   position: relative;
-  min-height: 18cm;
-  height: 18cm;
+  min-height: 25cm;
+  height: 25cm;
   scroll-margin-top: var(--header-h);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: clamp(26px, 2.8vw, 38px);
-  padding-bottom: clamp(26px, 2.8vw, 38px);
+  padding-top: calc(var(--header-h) + clamp(14px, 1.8vw, 26px));
+  padding-bottom: clamp(28px, 3vw, 44px);
   background:
     radial-gradient(ellipse 65% 55% at 85% 40%, rgba(214, 181, 116, 0.16), transparent 70%),
     radial-gradient(ellipse 40% 40% at 15% 85%, rgba(0, 0, 0, 0.03), transparent 70%),
@@ -1074,32 +1131,41 @@ address {
   top: 50%;
   right: 2%;
   transform: translateY(-50%);
-  width: min(48vh, 480px);
-  color: #64748b;
-  opacity: 0.38;
+  width: min(56vh, 560px);
+  color: #475569;
+  opacity: 0.88;
   pointer-events: none;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06));
+  filter: drop-shadow(0 12px 36px rgba(0, 0, 0, 0.08));
   will-change: transform, opacity;
   z-index: 1;
 }
 
 .tm-ph-emblem .tm-emblem-path {
-  stroke: #64748b;
-  stroke-width: 1.5;
+  stroke: #475569;
+  stroke-width: 1.8;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  will-change: stroke-dashoffset;
 }
 
 .tm-ph-emblem .tm-emblem-visor {
-  fill: #475569;
-  fill-opacity: 0.14;
+  fill: #334155;
+  fill-opacity: 0.16;
+  opacity: 0;
+  will-change: opacity;
 }
 
 .tm-ph-emblem .tm-emblem-dot {
-  fill: #64748b;
+  fill: #475569;
+  opacity: 0;
+  will-change: opacity;
 }
 
 .tm-ph-emblem .tm-emblem-wedge {
-  fill: #64748b;
-  fill-opacity: 0.18;
+  fill: #475569;
+  fill-opacity: 0.22;
+  opacity: 0;
+  will-change: opacity;
 }
 
 .tm-ph-top {
@@ -1114,9 +1180,9 @@ address {
 
 .tm-ph-title {
   position: relative;
-  margin-top: clamp(12px, 1.6vw, 20px);
+  margin-top: clamp(14px, 1.8vw, 24px);
   margin-bottom: 0;
-  font-size: clamp(28px, 3.6vw, 50px);
+  font-size: clamp(32px, 4vw, 56px);
   line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: -0.025em;
@@ -1144,32 +1210,32 @@ address {
 }
 
 .tm-ph-copy {
-  margin-top: 10px;
+  margin-top: 12px;
   margin-bottom: 0;
-  max-width: 50ch;
+  max-width: 52ch;
   color: rgba(8, 9, 11, 0.72);
   font-family: var(--font-sans);
-  font-size: clamp(13px, 1.05vw, 15px);
-  line-height: 1.5;
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.55;
 }
 
 .tm-ph-principles {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 22px);
-  margin-top: clamp(16px, 2vw, 26px);
+  gap: clamp(16px, 2vw, 24px);
+  margin-top: clamp(20px, 2.5vw, 32px);
   border-top: 0;
   position: relative;
   z-index: 2;
 }
 
 .tm-ph-principle {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(8, 9, 11, 0.09);
   border-radius: 16px;
-  padding: clamp(16px, 1.8vw, 22px);
+  padding: clamp(18px, 2vw, 24px);
   box-shadow:
     0 8px 24px -6px rgba(0, 0, 0, 0.05),
     0 2px 6px -1px rgba(0, 0, 0, 0.02),
@@ -2778,7 +2844,7 @@ a.tm-direct-val:hover {
   /* 03 */
   .tm-philosophy {
     height: auto;
-    min-height: 18cm;
+    min-height: 25cm;
     padding-top: 48px;
     padding-bottom: 48px;
   }
@@ -2788,6 +2854,16 @@ a.tm-direct-val:hover {
     right: -15%;
     width: 85vw;
     opacity: 0.14;
+  }
+
+  .tm-ph-emblem .tm-emblem-path {
+    stroke-dashoffset: 0;
+  }
+
+  .tm-ph-emblem .tm-emblem-visor,
+  .tm-ph-emblem .tm-emblem-dot,
+  .tm-ph-emblem .tm-emblem-wedge {
+    opacity: 1;
   }
 
   .tm-ph-principles {

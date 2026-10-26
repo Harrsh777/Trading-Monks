@@ -12,6 +12,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingScreen from "./components/LoadingScreen";
+import SplitText from "@/components/SplitText";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import "./page.css";
 
@@ -382,7 +383,7 @@ function MagneticLink({
 /* 01 — Hero static stock image: Bull & Bear standoff                          */
 /* -------------------------------------------------------------------------- */
 
-export function HeroImage() {
+export function HeroImage({ darkLayerActive = false }: { darkLayerActive?: boolean }) {
   return (
     <div className="tm-hero-media" aria-hidden="true">
       <img
@@ -392,6 +393,7 @@ export function HeroImage() {
         fetchPriority="high"
         decoding="async"
       />
+      <div className={`tm-hero-dark-layer ${darkLayerActive ? "is-active" : ""}`} />
       <div className="tm-hero-overlay tm-hero-overlay-left" />
       <div className="tm-hero-overlay tm-hero-overlay-top" />
       <div className="tm-hero-overlay tm-hero-overlay-bottom" />
@@ -927,38 +929,34 @@ export default function Home() {
   const [motionPaused, setMotionPaused] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [heroRevealed, setHeroRevealed] = useState(false);
+  const [landingPageArrived, setLandingPageArrived] = useState(false);
+  const [heroAnimationStarted, setHeroAnimationStarted] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   const [focusedStage, setFocusedStage] = useState<number | null>(null);
 
-  /* Hero headline — hidden on mount, revealed as the loader slides right */
+  /* If loader is not rendered on mount, mark landing page as arrived immediately */
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root || motionPaused) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!showLoader && !landingPageArrived) {
+      setLandingPageArrived(true);
+    }
+  }, [showLoader, landingPageArrived]);
 
-    const lines = root.querySelectorAll(".tm-hero-title .tm-line > span");
-    const support = root.querySelectorAll(".tm-hero-support, .tm-hero-buttons, .tm-hero-top, .tm-ticker");
-
-    if (!heroRevealed) {
-      gsap.set(lines, { yPercent: 115, rotate: 2 });
-      gsap.set(support, { opacity: 0, y: 16 });
+  /* Wait 1 second on the landing page showing pure 4K artwork before triggering dark layer and SplitText */
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setHeroAnimationStarted(true);
       return;
     }
+    if (!landingPageArrived) {
+      setHeroAnimationStarted(false);
+      return;
+    }
+    const timer = setTimeout(() => {
+      setHeroAnimationStarted(true);
+    }, 1000);
 
-    const tl = gsap.timeline();
-    tl.to(lines, { yPercent: 0, rotate: 0, duration: 1.2, stagger: 0.14, ease: "power4.out" })
-      .fromTo(
-        ".tm-hero-title .tm-gold-text",
-        { color: "#F5F1E8" },
-        { color: "#D6B574", duration: 1.1, ease: "power2.inOut" },
-        "-=0.5",
-      )
-      .to(support, { opacity: 1, y: 0, duration: 0.9, stagger: 0.08, ease: "power3.out" }, "-=0.9");
-
-    return () => {
-      tl.kill();
-    };
-  }, [heroRevealed, motionPaused]);
+    return () => clearTimeout(timer);
+  }, [landingPageArrived]);
 
   /* Scroll choreography */
   useEffect(() => {
@@ -1007,50 +1005,6 @@ export default function Home() {
         });
 
         /* 03: kinetic words + emblem line-draw */
-        gsap.from(".tm-ph-word > span", {
-          yPercent: 110,
-          stagger: 0.25,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".tm-ph-title", start: "top 80%", end: "bottom 45%", scrub: 0.8 },
-        });
-        /* 03: Right-side grey emblem draws as you scroll into Section 03 */
-        gsap.set(".tm-ph-emblem .tm-emblem-path", { strokeDashoffset: 1 });
-        gsap.set(".tm-ph-emblem", { opacity: 0.08, scale: 0.95 });
-
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: ".tm-philosophy",
-            start: "top 80%",
-            end: "center 40%",
-            scrub: 0.8,
-          },
-        })
-          .to(".tm-ph-emblem", { opacity: 0.42, scale: 1, duration: 0.35 }, 0)
-          .to(
-            ".tm-ph-emblem .tm-emblem-path",
-            { strokeDashoffset: 0, stagger: 0.035, duration: 1.3, ease: "power2.out" },
-            0.05,
-          );
-
-        gsap.to(".tm-ph-emblem", {
-          y: -40,
-          ease: "none",
-          scrollTrigger: { trigger: ".tm-philosophy", start: "top bottom", end: "bottom top", scrub: 0.6 },
-        });
-
-        /* 03: principle cards reveal */
-        gsap.from(".tm-ph-principle", {
-          y: 36,
-          opacity: 0,
-          stagger: 0.12,
-          duration: 0.75,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".tm-ph-principles",
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        });
 
         /* 05: restrained number counters + subtle scroll parallax */
         gsap.utils.toArray<HTMLElement>(".tm-count", root).forEach((el) => {
@@ -1156,6 +1110,68 @@ export default function Home() {
               .to({}, { duration: 0.3 });
           }
 
+          /* 03 — The Monk's Philosophy: interactive scroll-draw logo */
+          const phSection = root.querySelector<HTMLElement>(".tm-philosophy");
+          if (phSection) {
+            const phPaths = gsap.utils.toArray<SVGPathElement>(".tm-ph-emblem .tm-emblem-path", phSection);
+            const phCards = gsap.utils.toArray<HTMLElement>(".tm-ph-principle", phSection);
+            const phDetails = phSection.querySelectorAll(
+              ".tm-ph-emblem .tm-emblem-visor, .tm-ph-emblem .tm-emblem-dot, .tm-ph-emblem .tm-emblem-wedge",
+            );
+
+            gsap.set(phPaths, { strokeDasharray: 1, strokeDashoffset: 1 });
+            gsap.set(phDetails, { opacity: 0 });
+            gsap.set(phCards, { y: 35, opacity: 0 });
+
+            const phTl = gsap.timeline({
+              scrollTrigger: {
+                trigger: phSection,
+                start: "top top",
+                end: "+=1800",
+                pin: true,
+                scrub: 0.7,
+                anticipatePin: 1,
+              },
+            });
+
+            // 1. Kinetic title words reveal
+            phTl.fromTo(
+              ".tm-ph-word > span",
+              { yPercent: 110 },
+              { yPercent: 0, stagger: 0.08, duration: 0.7, ease: "power3.out" },
+              0,
+            );
+
+            // 2. Logo geometric facets draw progressively across the scroll
+            phTl.to(
+              phPaths,
+              {
+                strokeDashoffset: 0,
+                stagger: 0.045,
+                duration: 2.2,
+                ease: "power1.inOut",
+              },
+              0.15,
+            );
+
+            // 3. Principle cards slide and illuminate in sync with drawing
+            phTl.to(
+              phCards,
+              { y: 0, opacity: 1, stagger: 0.18, duration: 0.85, ease: "power2.out" },
+              0.9,
+            );
+
+            // 4. Logo visor, dots and shoulder wedge emerge as lines complete
+            phTl.to(
+              phDetails,
+              { opacity: 1, stagger: 0.08, duration: 0.5, ease: "power2.out" },
+              1.8,
+            );
+
+            // 5. Hold so user enjoys the completed logo before unpinning
+            phTl.to({}, { duration: 0.4 });
+          }
+
           /* 04 — gold line travels through the system */
           const strategyStage = root.querySelector<HTMLElement>(".tm-strategy-stage");
           if (strategyStage) {
@@ -1185,6 +1201,13 @@ export default function Home() {
       media.add("(max-width: 999px), (max-height: 679px), (prefers-reduced-motion: reduce)", () => {
         setActiveStage(STAGES.length - 1);
         gsap.set(".tm-s-line", { strokeDashoffset: 0 });
+        gsap.set(".tm-ph-emblem .tm-emblem-path", { strokeDashoffset: 0 });
+        gsap.set(
+          ".tm-ph-emblem .tm-emblem-visor, .tm-ph-emblem .tm-emblem-dot, .tm-ph-emblem .tm-emblem-wedge",
+          { opacity: 1 },
+        );
+        gsap.set(".tm-ph-principle", { y: 0, opacity: 1 });
+        gsap.set(".tm-ph-word > span", { yPercent: 0 });
       });
     }, root);
 
@@ -1267,6 +1290,7 @@ export default function Home() {
           onComplete={() => {
             setShowLoader(false);
             setHeroRevealed(true);
+            setLandingPageArrived(true);
             requestAnimationFrame(() => ScrollTrigger.refresh());
           }}
         />
@@ -1295,6 +1319,8 @@ export default function Home() {
               title="Replay intro"
               onClick={() => {
                 setHeroRevealed(false);
+                setLandingPageArrived(false);
+                setHeroAnimationStarted(false);
                 setShowLoader(true);
               }}
             >
@@ -1342,27 +1368,96 @@ export default function Home() {
         {/* 01 — THE AWAKENING                                              */}
         {/* ============================================================== */}
         <section className="tm-hero" aria-labelledby="hero-title">
-          <HeroImage />
+          <HeroImage darkLayerActive={heroAnimationStarted} />
           <div className="tm-hero-facets" aria-hidden="true" />
 
           <div className="tm-container tm-hero-layout">
-            <div className="tm-hero-top tm-mono">
+            <div className={`tm-hero-top tm-mono ${heroAnimationStarted ? "is-active" : ""}`}>
               <span>SEBI REGISTERED RESEARCH ANALYST · {CONTACT.registration}</span>
             </div>
 
             <div className="tm-hero-copy">
               <h1 id="hero-title" className="tm-hero-title">
-                <span className="tm-line"><span>The market</span></span>
-                <span className="tm-line"><span>doesn't reward</span></span>
-                <span className="tm-line"><span className="tm-gold-text">the impulsive.</span></span>
+                <span className="tm-hero-split-line">
+                  {heroAnimationStarted ? (
+                    <SplitText
+                      text="The market"
+                      tag="span"
+                      effect="rise"
+                      splitType="chars"
+                      delay={35}
+                      duration={1.0}
+                      staggerFrom="start"
+                      trigger="load"
+                      hoverEffect="lift"
+                      textAlign="left"
+                    />
+                  ) : (
+                    <span className="tm-hero-placeholder">The market</span>
+                  )}
+                </span>
+                <span className="tm-hero-split-line">
+                  {heroAnimationStarted ? (
+                    <SplitText
+                      text="doesn't reward"
+                      tag="span"
+                      effect="rise"
+                      splitType="chars"
+                      delay={35}
+                      duration={1.0}
+                      staggerFrom="start"
+                      trigger="load"
+                      hoverEffect="lift"
+                      textAlign="left"
+                    />
+                  ) : (
+                    <span className="tm-hero-placeholder">doesn't reward</span>
+                  )}
+                </span>
+                <span className="tm-hero-split-line tm-gold-text">
+                  {heroAnimationStarted ? (
+                    <SplitText
+                      text="the impulsive."
+                      tag="span"
+                      effect="rise"
+                      splitType="chars"
+                      delay={35}
+                      duration={1.0}
+                      staggerFrom="start"
+                      trigger="load"
+                      hoverEffect="lift"
+                      textAlign="left"
+                      color="#D6B574"
+                      accentColor="#F6E9C4"
+                    />
+                  ) : (
+                    <span className="tm-hero-placeholder tm-gold-text">the impulsive.</span>
+                  )}
+                </span>
               </h1>
 
-              <p className="tm-hero-support">
-                Precision-driven thinking. Disciplined execution.
-                A different perspective on the markets.
-              </p>
+              <div className={`tm-hero-support-wrap ${heroAnimationStarted ? "is-active" : ""}`}>
+                {heroAnimationStarted ? (
+                  <SplitText
+                    text="Precision-driven thinking. Disciplined execution. A different perspective on the markets."
+                    tag="p"
+                    className="tm-hero-support"
+                    effect="fade"
+                    splitType="words"
+                    delay={25}
+                    duration={0.8}
+                    trigger="load"
+                    hoverEffect="none"
+                    textAlign="left"
+                  />
+                ) : (
+                  <p className="tm-hero-support tm-hero-placeholder">
+                    Precision-driven thinking. Disciplined execution. A different perspective on the markets.
+                  </p>
+                )}
+              </div>
 
-              <div className="tm-hero-buttons">
+              <div className={`tm-hero-buttons ${heroAnimationStarted ? "is-active" : ""}`}>
                 <MagneticLink href="#strategy">Explore our approach</MagneticLink>
                 <a className="tm-button tm-button-ghost" href="#contact">
                   <span>Connect with us</span>
@@ -1371,7 +1466,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="tm-ticker" aria-label="Illustrative market ticker. Not live data.">
+          <div className={`tm-ticker ${heroAnimationStarted ? "is-active" : ""}`} aria-label="Illustrative market ticker. Not live data.">
             <div className="tm-ticker-label">ILLUSTRATIVE · NOT LIVE</div>
             <div className="tm-ticker-window">
               <div className="tm-ticker-track">
