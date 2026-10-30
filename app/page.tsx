@@ -483,263 +483,785 @@ function MarketScene() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 04 — Interactive strategy system                                           */
+/* 04 — Scroll-driven strategy film (illustrative data)                       */
 /* -------------------------------------------------------------------------- */
 
-function StageVisual({ stageIndex }: { stageIndex: number }) {
-  if (stageIndex === 0) {
-    return (
-      <div className="tm-s-vis tm-s-vis-observe">
-        <div className="tm-s-vis-header">
-          <span className="tm-mono">PRICE ACTION / STRUCTURAL MAPPING</span>
-          <span className="tm-mono tm-gold">ACTIVE</span>
-        </div>
-        <svg viewBox="0 0 460 210" className="tm-s-svg" fill="none">
-          <line x1="30" y1="40" x2="430" y2="40" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-          <line x1="30" y1="90" x2="430" y2="90" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-          <line x1="30" y1="140" x2="430" y2="140" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-          <line x1="30" y1="52" x2="430" y2="52" stroke="#ff626f" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.85" />
-          <text x="35" y="47" fill="#ff626f" fontSize="10" fontFamily="monospace" letterSpacing="0.08em">RESISTANCE CORRIDOR (22,850)</text>
-          <line x1="30" y1="165" x2="430" y2="165" stroke="#bcff5e" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.85" />
-          <text x="35" y="180" fill="#bcff5e" fontSize="10" fontFamily="monospace" letterSpacing="0.08em">SUPPORT CONSOLIDATION (22,150)</text>
-          {[
-            { x: 65, o: 155, c: 130, h: 120, l: 160, up: true },
-            { x: 102, o: 130, c: 140, h: 125, l: 148, up: false },
-            { x: 139, o: 140, c: 110, h: 102, l: 145, up: true },
-            { x: 176, o: 110, c: 80, h: 72, l: 115, up: true },
-            { x: 213, o: 80, c: 60, h: 54, l: 85, up: true },
-            { x: 250, o: 60, c: 75, h: 56, l: 82, up: false },
-            { x: 287, o: 75, c: 92, h: 70, l: 100, up: false },
-            { x: 324, o: 92, c: 120, h: 88, l: 126, up: false },
-            { x: 361, o: 120, c: 155, h: 115, l: 160, up: false },
-            { x: 398, o: 155, c: 128, h: 120, l: 162, up: true },
-          ].map((c, i) => (
-            <g key={i} className="tm-s-candle-anim">
-              <line x1={c.x} y1={c.h} x2={c.x} y2={c.l} stroke={c.up ? "#bcff5e" : "#ff626f"} strokeWidth="1.4" />
-              <rect
-                x={c.x - 6}
-                y={Math.min(c.o, c.c)}
-                width="12"
-                height={Math.max(Math.abs(c.c - c.o), 4)}
-                fill={c.up ? "#bcff5e" : "#ff626f"}
-                rx="1"
-              />
-            </g>
-          ))}
-        </svg>
-        <div className="tm-s-vis-footer">
-          <span className="tm-mono">NOISE REDUCTION: 94%</span>
-          <span className="tm-mono tm-gold">STRUCTURE: CLEAR</span>
-        </div>
-      </div>
-    );
-  }
+const SX = {
+  left: 40,
+  right: 1060,
+  top: 56,
+  bottom: 456,
+  volTop: 492,
+  volBottom: 600,
+  axis: 1084,
+  min: 22000,
+  max: 23400,
+};
+const SX_LAST = 119;
+const SX_NOW = 81;
+const SX_ENTRY = 74;
+const SX_LEVELS = {
+  support: 22150,
+  resistance: 22650,
+  entryLow: 22660,
+  entryHigh: 22700,
+  entry: 22680,
+  stop: 22480,
+  target: 23360,
+};
+const SX_EVENTS = [
+  { index: 92, label: "Q3 RESULTS" },
+  { index: 106, label: "RBI POLICY" },
+];
+/* [index, price] waypoints — a range, a breakout, a retest, then the trend */
+const SX_WAYPOINTS: [number, number][] = [
+  [0, 22320], [4, 22610], [9, 22170], [14, 22640], [20, 22160], [26, 22645],
+  [32, 22240], [37, 22600], [42, 22300], [48, 22620], [52, 22420], [58, 22636],
+  [63, 22500], [68, 22790], [74, 22678], [81, 22815], [87, 22990], [92, 22880],
+  [99, 23180], [104, 23090], [111, 23300], [115, 23230], [119, 23380],
+];
+const SX_TOUCHES = [4, 9, 14, 20, 26, 48, 58];
 
-  if (stageIndex === 1) {
-    return (
-      <div className="tm-s-vis tm-s-vis-validate">
-        <div className="tm-s-vis-header">
-          <span className="tm-mono">VOLUME PARTICIPATION & MOMENTUM</span>
-          <span className="tm-mono tm-gold">CONFIRMED</span>
-        </div>
-        <svg viewBox="0 0 460 210" className="tm-s-svg" fill="none">
-          <defs>
-            <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#d6b574" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#d6b574" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M 40 155 Q 140 145 200 105 T 360 45 L 420 35 L 420 175 L 40 175 Z"
-            fill="url(#trendGrad)"
-          />
-          <path
-            d="M 40 155 Q 140 145 200 105 T 360 45 L 420 35"
-            stroke="#d6b574"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-          />
-          {[28, 44, 35, 62, 85, 95, 78, 110, 135, 142].map((h, i) => (
-            <rect
-              key={i}
-              x={48 + i * 37}
-              y={175 - h * 0.45}
-              width="20"
-              height={h * 0.45}
-              fill={i >= 6 ? "#d6b574" : "rgba(214, 181, 116, 0.35)"}
-              rx="2"
-            />
-          ))}
-          <line x1="30" y1="175" x2="430" y2="175" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-          <text x="320" y="28" fill="#d6b574" fontSize="10" fontFamily="monospace">ACCUMULATION FLOW</text>
-        </svg>
-        <div className="tm-s-vis-footer">
-          <span className="tm-mono">INSTITUTIONAL FLOW: +24.8%</span>
-          <span className="tm-mono tm-gold">CONVICTION: HIGH</span>
-        </div>
-      </div>
-    );
-  }
+const sxX = (i: number) => SX.left + (i / SX_LAST) * (SX.right - SX.left);
+const sxY = (price: number) =>
+  SX.bottom - ((price - SX.min) / (SX.max - SX.min)) * (SX.bottom - SX.top);
+const sxPrice = (price: number) => Math.round(price).toLocaleString("en-IN");
+/* Trig output differs in the last bits between server and browser — round it away */
+const sxRound = (n: number) => Math.round(n * 100) / 100;
 
-  if (stageIndex === 2) {
-    return (
-      <div className="tm-s-vis tm-s-vis-structure">
-        <div className="tm-s-vis-header">
-          <span className="tm-mono">ASYMMETRIC PARAMETER MATRIX</span>
-          <span className="tm-mono tm-gold">RATIO 3.4 : 1</span>
-        </div>
-        <svg viewBox="0 0 460 210" className="tm-s-svg" fill="none">
-          <rect x="40" y="30" width="380" height="42" fill="rgba(188, 255, 94, 0.12)" rx="4" stroke="rgba(188, 255, 94, 0.45)" />
-          <text x="55" y="56" fill="#bcff5e" fontSize="11" fontFamily="monospace" fontWeight="bold">TARGET CORRIDOR (+8.50%)</text>
-          
-          <rect x="40" y="95" width="380" height="32" fill="rgba(214, 181, 116, 0.15)" rx="4" stroke="rgba(214, 181, 116, 0.65)" />
-          <text x="55" y="116" fill="#d6b574" fontSize="11" fontFamily="monospace" fontWeight="bold">ENTRY CORRIDOR (22,340 — 22,390)</text>
+const SX_CLEAN = Array.from({ length: SX_LAST + 1 }, (_, i) => {
+  const next = SX_WAYPOINTS.findIndex(([at]) => at >= i);
+  const [a, pa] = SX_WAYPOINTS[Math.max(0, next - 1)];
+  const [b, pb] = SX_WAYPOINTS[next];
+  const f = b === a ? 0 : (i - a) / (b - a);
+  const eased = (1 - Math.cos(f * Math.PI)) / 2;
+  return sxRound(pa + (pb - pa) * eased + Math.sin(f * Math.PI) * Math.sin(i * 1.7) * 18);
+});
 
-          <rect x="40" y="150" width="380" height="32" fill="rgba(255, 98, 111, 0.12)" rx="4" stroke="rgba(255, 98, 111, 0.45)" strokeDasharray="4 2" />
-          <text x="55" y="171" fill="#ff626f" fontSize="11" fontFamily="monospace" fontWeight="bold">INVALIDATION BOUNDARY (-2.10%)</text>
-        </svg>
-        <div className="tm-s-vis-footer">
-          <span className="tm-mono">MAX UPSIDE ASYMMETRY</span>
-          <span className="tm-mono tm-gold">STRICT BOUNDARY</span>
-        </div>
-      </div>
-    );
-  }
+const SX_NOISE = SX_CLEAN.map((_, i) =>
+  i === 0 ? 0 : sxRound(Math.sin(i * 2.9) * 120 + Math.sin(i * 7.3 + 1) * 70 + Math.cos(i * 13.7) * 45),
+);
 
-  if (stageIndex === 3) {
-    return (
-      <div className="tm-s-vis tm-s-vis-risk">
-        <div className="tm-s-vis-header">
-          <span className="tm-mono">DOWNSIDE EXPOSURE & EVENT RADAR</span>
-          <span className="tm-mono tm-gold">BOUNDARIES SET</span>
-        </div>
-        <svg viewBox="0 0 460 210" className="tm-s-svg" fill="none">
-          <circle cx="230" cy="110" r="80" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-          <circle cx="230" cy="110" r="55" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-          <circle cx="230" cy="110" r="32" stroke="rgba(214,181,116,0.3)" strokeWidth="1.5" strokeDasharray="4 4" />
-          <line x1="150" y1="110" x2="310" y2="110" stroke="rgba(255,255,255,0.12)" />
-          <line x1="230" y1="30" x2="230" y2="190" stroke="rgba(255,255,255,0.12)" />
-          <circle cx="190" cy="78" r="4" fill="#d6b574" />
-          <text x="135" y="74" fill="#d6b574" fontSize="9" fontFamily="monospace">VOLATILITY CAP</text>
-          <circle cx="280" cy="88" r="4" fill="#bcff5e" />
-          <text x="288" y="91" fill="#bcff5e" fontSize="9" fontFamily="monospace">LIQUIDITY SAFE</text>
-          <circle cx="210" cy="155" r="4" fill="#ff626f" />
-          <text x="135" y="160" fill="#ff626f" fontSize="9" fontFamily="monospace">EVENT RISK</text>
-          <circle cx="230" cy="110" r="6" fill="#d6b574" />
-        </svg>
-        <div className="tm-s-vis-footer">
-          <span className="tm-mono">PORTFOLIO DRAWDOWN: &lt; 1.8%</span>
-          <span className="tm-mono tm-gold">RISK ISOLATED</span>
-        </div>
-      </div>
-    );
-  }
+const SX_VOLUME = Array.from({ length: 40 }, (_, k) => {
+  const i = k * 3 + 1;
+  const accumulation = i >= 46 && i <= SX_NOW;
+  const ramp = accumulation ? ((i - 46) / (SX_NOW - 46)) * 0.38 : 0;
+  const breakout = Math.abs(i - 68) <= 2 ? 0.28 : 0;
+  const value = sxRound(Math.min(1, 0.2 + Math.abs(Math.sin(k * 1.31)) * 0.2 + ramp + breakout));
+  return { i, value, accumulation };
+});
+
+const sxBarHeight = (value: number) => value * (SX.volBottom - SX.volTop - 8);
+
+const SX_VOLUME_MA = SX_VOLUME.map((bar, k) => {
+  const span = SX_VOLUME.slice(Math.max(0, k - 4), k + 1);
+  const average = span.reduce((sum, v) => sum + v.value, 0) / span.length;
+  return `${k ? "L" : "M"}${sxX(bar.i).toFixed(1)} ${(SX.volBottom - sxBarHeight(average)).toFixed(1)}`;
+}).join("");
+
+type StrategyFrame = { reveal: number; noise: number };
+const SX_FINAL: StrategyFrame = { reveal: SX_LAST, noise: 0 };
+
+function sxFrame({ reveal, noise }: StrategyFrame) {
+  const series = SX_CLEAN.map((p, i) =>
+    Math.min(SX.max - 16, Math.max(SX.min + 16, p + SX_NOISE[i] * noise)),
+  );
+  const line = series
+    .map((p, i) => `${i ? "L" : "M"}${sxX(i).toFixed(1)} ${sxY(p).toFixed(1)}`)
+    .join("");
+  const i = Math.min(SX_LAST - 1, Math.floor(reveal));
+  const price = series[i] + (series[i + 1] - series[i]) * (reveal - i);
+  return {
+    line,
+    area: `${line}L${SX.right} ${SX.bottom}L${SX.left} ${SX.bottom}Z`,
+    x: sxX(reveal),
+    y: sxY(price),
+    price,
+  };
+}
+
+/* Writes one frame straight to the DOM — called on every scrubbed tick. */
+function paintStrategyChart(svg: SVGSVGElement, frame: StrategyFrame) {
+  const { line, area, x, y, price } = sxFrame(frame);
+  const set = (selector: string, attrs: Record<string, string | number>) => {
+    const el = svg.querySelector(selector);
+    if (el) for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, String(value));
+  };
+  set(".tm-sx-line", { d: line });
+  set(".tm-sx-area", { d: area });
+  set(".tm-sx-reveal", { width: x + 2 });
+  set(".tm-sx-guide", { x1: x, y1: y, y2: y });
+  set(".tm-sx-tip", { transform: `translate(${x} ${y})` });
+  set(".tm-sx-tag", { transform: `translate(${SX.axis} ${y})` });
+  const tag = svg.querySelector(".tm-sx-tag-text");
+  if (tag) tag.textContent = sxPrice(price);
+}
+
+function StrategyChart() {
+  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const f = sxFrame(SX_FINAL);
+  const entryX = sxX(SX_ENTRY);
+  const zoneWidth = SX.right - entryX;
+  const zoneCenter = entryX + zoneWidth / 2;
 
   return (
-    <div className="tm-s-vis tm-s-vis-review">
-      <div className="tm-s-vis-header">
-        <span className="tm-mono">CONTINUOUS REASSESSMENT AUDIT</span>
-        <span className="tm-mono tm-gold">ACTIVE MONITORING</span>
-      </div>
-      <svg viewBox="0 0 460 210" className="tm-s-svg" fill="none">
-        <ellipse cx="230" cy="110" rx="135" ry="50" stroke="rgba(214,181,116,0.35)" strokeWidth="1.5" strokeDasharray="6 4" />
-        <ellipse cx="230" cy="110" rx="95" ry="34" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        <circle cx="95" cy="110" r="5" fill="#d6b574" />
-        <text x="50" y="132" fill="#d6b574" fontSize="10" fontFamily="monospace">01 / VALIDATE</text>
-        <circle cx="230" cy="60" r="5" fill="#bcff5e" />
-        <text x="195" y="46" fill="#bcff5e" fontSize="10" fontFamily="monospace">02 / MONITOR</text>
-        <circle cx="365" cy="110" r="5" fill="#d6b574" />
-        <text x="340" y="132" fill="#d6b574" fontSize="10" fontFamily="monospace">03 / ADJUST</text>
-        <circle cx="230" cy="160" r="5" fill="#bcff5e" />
-        <text x="195" y="182" fill="#bcff5e" fontSize="10" fontFamily="monospace">04 / DISCLOSE</text>
-      </svg>
-      <div className="tm-s-vis-footer">
-        <span className="tm-mono">AUDIT FREQUENCY: HOURLY</span>
-        <span className="tm-mono tm-gold">PERSPECTIVE: DYNAMIC</span>
-      </div>
-    </div>
+    <svg
+      className="tm-sx-svg"
+      viewBox="0 0 1200 640"
+      role="img"
+      aria-label="Illustrative price chart walking through the five research stages. Not live market data."
+    >
+      <defs>
+        <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#d6b574" stopOpacity="0.3" />
+          <stop offset="1" stopColor="#d6b574" stopOpacity="0" />
+        </linearGradient>
+        <clipPath id={`${id}-reveal`}>
+          <rect className="tm-sx-reveal" x="0" y="0" width={f.x + 2} height="640" />
+        </clipPath>
+      </defs>
+
+      {/* Grid and price axis */}
+      <g className="tm-sx-grid">
+        {Array.from({ length: 13 }, (_, k) => (
+          <line key={k} className="tm-sx-vgrid" x1={SX.left + k * 85} x2={SX.left + k * 85} y1={SX.top} y2={SX.volBottom} />
+        ))}
+        {[22000, 22200, 22400, 22600, 22800, 23000, 23200, 23400].map((p) => (
+          <g key={p}>
+            <line x1={SX.left} x2={SX.axis} y1={sxY(p)} y2={sxY(p)} />
+            <text x="1190" y={sxY(p) + 4} textAnchor="end">{sxPrice(p)}</text>
+          </g>
+        ))}
+        <line className="tm-sx-axis" x1={SX.left} x2={SX.axis} y1={SX.volBottom} y2={SX.volBottom} />
+        <text className="tm-sx-axis-label" x={SX.left + 6} y={SX.volTop + 12}>VOLUME</text>
+      </g>
+
+      {/* 02 — Volume participation */}
+      <g className="tm-sx-volume" clipPath={`url(#${id}-reveal)`}>
+        {SX_VOLUME.map((bar) => {
+          const h = sxBarHeight(bar.value);
+          return (
+            <rect
+              key={bar.i}
+              className={`tm-sx-bar ${bar.accumulation ? "is-accum" : ""}`}
+              x={sxX(bar.i) - 6}
+              y={SX.volBottom - h}
+              width="12"
+              height={h}
+              rx="1.5"
+            />
+          );
+        })}
+        <path className="tm-sx-vol-ma" d={SX_VOLUME_MA} pathLength="1" />
+      </g>
+      <g className="tm-sx-accum">
+        <path d={`M${sxX(46)} ${SX.volTop}v-8H${sxX(SX_NOW)}v8`} />
+        <text x={(sxX(46) + sxX(SX_NOW)) / 2} y={SX.volTop - 16} textAnchor="middle">
+          ACCUMULATION
+        </text>
+      </g>
+
+      {/* 01 — Structure: support and resistance */}
+      <g className="tm-sx-levels">
+        {([
+          ["is-resistance", "RESISTANCE", SX_LEVELS.resistance, -12],
+          ["is-support", "SUPPORT", SX_LEVELS.support, 24],
+        ] as const).map(([tone, name, p, dy]) => (
+          <g key={name} className={`tm-sx-level ${tone}`}>
+            <line className="tm-sx-level-line" x1={SX.left} x2={SX.right} y1={sxY(p)} y2={sxY(p)} />
+            <text className="tm-sx-level-label" x={SX.left + 10} y={sxY(p) + dy}>
+              {name} · {sxPrice(p)}
+            </text>
+          </g>
+        ))}
+        {SX_TOUCHES.map((i) => (
+          <circle key={i} className="tm-sx-touch" cx={sxX(i)} cy={sxY(SX_CLEAN[i])} r="6" />
+        ))}
+      </g>
+
+      {/* 04 — Exposure: reward vs risk and scheduled events */}
+      <g className="tm-sx-risk">
+        <rect
+          className="tm-sx-reward"
+          x={entryX}
+          y={sxY(SX_LEVELS.target)}
+          width={zoneWidth}
+          height={sxY(SX_LEVELS.entry) - sxY(SX_LEVELS.target)}
+        />
+        <rect
+          className="tm-sx-loss"
+          x={entryX}
+          y={sxY(SX_LEVELS.entry)}
+          width={zoneWidth}
+          height={sxY(SX_LEVELS.stop) - sxY(SX_LEVELS.entry)}
+        />
+        {SX_EVENTS.map((event) => (
+          <line
+            key={event.index}
+            className="tm-sx-event-line"
+            x1={sxX(event.index)}
+            x2={sxX(event.index)}
+            y1={SX.top + 24}
+            y2={SX.bottom}
+          />
+        ))}
+      </g>
+
+      {/* Price — line and area share one clip that the scroll reveals */}
+      <g className="tm-sx-price" clipPath={`url(#${id}-reveal)`}>
+        <path className="tm-sx-area" d={f.area} fill={`url(#${id}-area)`} />
+        <path className="tm-sx-line" d={f.line} />
+      </g>
+
+      {/* 03 — The plan: entry, target, invalidation */}
+      <g className="tm-sx-plan">
+        <rect
+          className="tm-sx-plan-bar tm-sx-plan-entry"
+          x={entryX}
+          y={sxY(SX_LEVELS.entryHigh)}
+          width={zoneWidth}
+          height={sxY(SX_LEVELS.entryLow) - sxY(SX_LEVELS.entryHigh)}
+        />
+        <line
+          className="tm-sx-plan-bar tm-sx-plan-line is-target"
+          x1={entryX}
+          x2={SX.right}
+          y1={sxY(SX_LEVELS.target)}
+          y2={sxY(SX_LEVELS.target)}
+        />
+        <line
+          className="tm-sx-plan-bar tm-sx-plan-line is-stop"
+          x1={entryX}
+          x2={SX.right}
+          y1={sxY(SX_LEVELS.stop)}
+          y2={sxY(SX_LEVELS.stop)}
+        />
+        <text className="tm-sx-plan-label is-target" x={entryX + 8} y={sxY(SX_LEVELS.target) - 10}>
+          TARGET · {sxPrice(SX_LEVELS.target)}
+        </text>
+        <text className="tm-sx-plan-label is-entry" x={SX.right - 8} y={sxY(SX_LEVELS.entryHigh) - 10} textAnchor="end">
+          ENTRY ZONE · {sxPrice(SX_LEVELS.entryLow)}–{sxPrice(SX_LEVELS.entryHigh)}
+        </text>
+        <text className="tm-sx-plan-label is-stop" x={entryX + 8} y={sxY(SX_LEVELS.stop) + 24}>
+          INVALIDATION · {sxPrice(SX_LEVELS.stop)}
+        </text>
+        <g className="tm-sx-entry-mark">
+          <circle cx={entryX} cy={sxY(SX_CLEAN[SX_ENTRY])} r="13" />
+          <circle cx={entryX} cy={sxY(SX_CLEAN[SX_ENTRY])} r="5" />
+        </g>
+      </g>
+
+      {/* 04 — labels sit above the price so they stay legible */}
+      <g className="tm-sx-ratio" transform={`translate(${SX.right - 104} ${sxY(SX_LEVELS.entry) - 82})`}>
+        <rect x="-92" y="-20" width="184" height="40" rx="20" />
+        <text y="5" textAnchor="middle">R:R  3.4 : 1</text>
+      </g>
+      <text
+        className="tm-sx-risk-label is-loss"
+        x={zoneCenter}
+        y={(sxY(SX_LEVELS.entry) + sxY(SX_LEVELS.stop)) / 2 + 5}
+        textAnchor="middle"
+      >
+        RISK DEFINED · −0.9%
+      </text>
+      {SX_EVENTS.map((event) => (
+        <g key={event.index} className="tm-sx-risk-label tm-sx-event">
+          <path d={`M${sxX(event.index)} ${SX.top + 14}l6 6-6 6-6-6z`} />
+          <text x={sxX(event.index) + 10} y={SX.bottom - 12}>{event.label}</text>
+        </g>
+      ))}
+
+      {/* 05 — Review */}
+      <g className="tm-sx-done">
+        <circle className="tm-sx-done-ring" cx={SX.right} cy={sxY(SX_CLEAN[SX_LAST])} r="20" />
+        <text x={SX.right - 4} y={SX.top - 30} textAnchor="end">
+          TARGET ZONE MET · VIEW REVIEWED
+        </text>
+      </g>
+
+      {/* Live cursor riding the tip of the price */}
+      <g className="tm-sx-cursor">
+        <line className="tm-sx-guide" x1={f.x} x2={SX.axis} y1={f.y} y2={f.y} />
+        <g className="tm-sx-tip" transform={`translate(${f.x} ${f.y})`}>
+          <circle className="tm-sx-tip-pulse" r="16" />
+          <circle className="tm-sx-tip-dot" r="5" />
+        </g>
+        <g className="tm-sx-tag" transform={`translate(${SX.axis} ${f.y})`}>
+          <rect x="0" y="-14" width="112" height="28" rx="4" />
+          <text className="tm-sx-tag-text" x="56" y="5" textAnchor="middle">
+            {sxPrice(f.price)}
+          </text>
+        </g>
+      </g>
+    </svg>
   );
 }
 
-function StrategyDiagram({
-  active,
-  focused,
-  onFocus,
+function StrategySection({
+  activeStage,
+  onJump,
 }: {
-  active: number;
-  focused: number | null;
-  onFocus: (index: number | null) => void;
+  activeStage: number;
+  onJump: (index: number) => void;
 }) {
-  const currentIndex = focused ?? active;
-  const shown = STAGES[currentIndex];
-
   return (
-    <div className="tm-s-system">
-      <div className="tm-s-diagram" onPointerLeave={() => onFocus(null)}>
-        <svg className="tm-s-rail" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="0" x2="1000" y1="4" y2="4" className="tm-s-rail-base" />
-          <line x1="0" x2="1000" y1="4" y2="4" className="tm-s-line" pathLength="1" />
-        </svg>
+    <section id="strategy" className="tm-sx" aria-labelledby="strategy-title">
+      <div className="tm-sx-stage">
+        <div className="tm-sx-backdrop" aria-hidden="true" />
 
-        <div className="tm-s-nodes" role="tablist" aria-label="Research stages">
-          {STAGES.map((stage, i) => {
-            const isActive = i <= active;
-            const isCurrent = currentIndex === i;
-            return (
+        <div className="tm-container tm-sx-intro">
+          <Eyebrow>04 / INSIDE THE STRATEGY</Eyebrow>
+          <h2 id="strategy-title">
+            One system.<br />
+            <span className="tm-gold-text">Five deliberate stages.</span>
+          </h2>
+          <p>
+            Research is not a feeling. It is a sequence — each stage with its own
+            inputs, checks and stated limits.
+          </p>
+          <span className="tm-sx-cue tm-mono" aria-hidden="true">Scroll to run the system</span>
+        </div>
+
+        <div className="tm-container tm-sx-layout">
+          <ol className="tm-sx-steps">
+            {STAGES.map((stage) => (
+              <li className="tm-sx-step" key={stage.number}>
+                <span className="tm-sx-step-ghost" aria-hidden="true">{stage.number}</span>
+                <div className="tm-sx-step-head">
+                  <span>{stage.number}</span>
+                  <span className="tm-sx-step-rule" aria-hidden="true" />
+                  <span>{stage.name}</span>
+                </div>
+                <h3>{stage.title}</h3>
+                <p>{stage.text}</p>
+                <span className="tm-sx-step-label tm-mono">{stage.label}</span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="tm-sx-panel">
+            <div className="tm-sx-panel-bar">
+              <span className="tm-mono tm-sx-ticker">
+                <i aria-hidden="true" /> NIFTY 50 · 1D
+              </span>
+              <span className="tm-mono tm-gold tm-sx-status" aria-live="polite">
+                {STAGES[activeStage].signal}
+              </span>
+              <span className="tm-demo-badge">ILLUSTRATIVE · NOT LIVE</span>
+            </div>
+            <StrategyChart />
+          </div>
+        </div>
+
+        <nav className="tm-container tm-sx-hud" aria-label="Research stages">
+          <div className="tm-sx-hud-rail">
+            <div className="tm-sx-hud-track" aria-hidden="true">
+              <div className="tm-sx-hud-fill" />
+            </div>
+            {STAGES.map((stage, i) => (
               <button
                 type="button"
                 key={stage.number}
-                role="tab"
-                aria-selected={isCurrent}
-                className={`tm-s-node ${isActive ? "is-active" : ""} ${isCurrent ? "is-current" : ""}`}
-                onPointerEnter={() => onFocus(i)}
-                onFocus={() => onFocus(i)}
-                onClick={() => onFocus(i)}
+                className={`tm-sx-hud-node ${i <= activeStage ? "is-reached" : ""} ${i === activeStage ? "is-current" : ""}`}
+                style={{ "--at": `${(i / (STAGES.length - 1)) * 100}%` } as CSSProperties}
+                aria-current={i === activeStage ? "step" : undefined}
+                onClick={() => onJump(i)}
               >
-                <span className="tm-s-dot" aria-hidden="true">
-                  <i />
-                </span>
-                <span className="tm-s-number">{stage.number}</span>
-                <span className="tm-s-name">{stage.name}</span>
-                <span className="tm-s-label">{stage.label}</span>
+                <i aria-hidden="true" />
+                <span>{stage.number} {stage.name}</span>
               </button>
+            ))}
+          </div>
+        </nav>
+      </div>
+
+      <div className="tm-container">
+        <p className="tm-fine-print">
+          Trading Monks provides independent equity research under SEBI Research
+          Analyst registration. It does not execute trades or manage client capital.
+          Chart is illustrative and does not represent a past or future recommendation.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* 05 — Governance seal: a guilloché certificate drawn by scroll              */
+/* -------------------------------------------------------------------------- */
+
+const GV_STATS = [
+  {
+    value: 10,
+    suffix: "+",
+    tag: "EXPERIENCE",
+    title: "Years of market analysis",
+    text: "Market behaviour, price dynamics, institutional volume and structural cycles.",
+  },
+  {
+    value: 3,
+    suffix: "",
+    tag: "METHODOLOGY",
+    title: "Integrated research lenses",
+    text: "Technical structure, business fundamentals and explicit risk boundaries.",
+  },
+  {
+    value: 5,
+    suffix: "",
+    tag: "REGULATORY",
+    title: "Year registration validity",
+    text: "Granted by SEBI through 15 February 2031 under the RA Regulations.",
+  },
+];
+
+const GV_LENSES = [
+  {
+    name: "TECHNICAL",
+    angle: 0,
+    title: "Technical Structure",
+    text: "Support, resistance, consolidation, trend strength, breakout geometry, momentum and volume delta.",
+  },
+  {
+    name: "FUNDAMENTAL",
+    angle: 120,
+    title: "Business Fundamentals",
+    text: "Earnings trajectory, revenue quality, balance-sheet strength, governance and competitive position.",
+  },
+  {
+    name: "RISK",
+    angle: 240,
+    title: "Risk Controls",
+    text: "Downside exposure, invalidation levels, volatility parameters, liquidity and event risk stated upfront.",
+  },
+];
+
+const GV_YEARS = [2026, 2027, 2028, 2029, 2030, 2031];
+const GV_ARC = { start: -150, sweep: 300, r: 222 };
+const GV_LENS_OFFSET = 50;
+const GV_RING_TEXT = `SEBI REGISTERED RESEARCH ANALYST · ${CONTACT.registration} · ${CONTACT.name.toUpperCase()} · NEW DELHI · INDIA · `;
+
+/* Degrees run clockwise from twelve o'clock; output rounded so SSR matches the browser */
+const gvRound = (n: number) => Math.round(n * 10) / 10;
+const gvPolar = (r: number, deg: number): [number, number] => {
+  const a = (deg * Math.PI) / 180;
+  return [gvRound(r * Math.sin(a)), gvRound(-r * Math.cos(a))];
+};
+const gvPath = (points: [number, number][]) =>
+  points.map(([x, y], i) => `${i ? "L" : "M"}${x} ${y}`).join("") + "Z";
+
+/* Banknote braid: four phase-shifted sine waves wrapped around a ring */
+const GV_BAND = [0, 1, 2, 3].map((k) =>
+  gvPath(
+    Array.from({ length: 720 }, (_, i) => {
+      const deg = i / 2;
+      return gvPolar(265 + 14 * Math.sin((deg * Math.PI) / 5 + (k * Math.PI) / 2), deg);
+    }),
+  ),
+);
+
+/* Hypotrochoid rosette (R 8, r 5, d 5) — the classic spirograph lathe pattern */
+const GV_ROSETTE = gvPath(
+  Array.from({ length: 900 }, (_, i) => {
+    const t = (i / 900) * Math.PI * 10;
+    return [
+      gvRound((3 * Math.cos(t) + 5 * Math.cos(0.6 * t)) * 8.6),
+      gvRound((3 * Math.sin(t) - 5 * Math.sin(0.6 * t)) * 8.6),
+    ];
+  }),
+);
+
+const gvArcDeg = (fraction: number) => GV_ARC.start + GV_ARC.sweep * fraction;
+const GV_VALIDITY = (() => {
+  const [sx, sy] = gvPolar(GV_ARC.r, GV_ARC.start);
+  const [ex, ey] = gvPolar(GV_ARC.r, GV_ARC.start + GV_ARC.sweep);
+  return `M${sx} ${sy}A${GV_ARC.r} ${GV_ARC.r} 0 1 1 ${ex} ${ey}`;
+})();
+
+function GovernanceSeal() {
+  const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+
+  return (
+    <svg
+      className="tm-gv-seal"
+      viewBox="-300 -300 600 600"
+      role="img"
+      aria-label={`SEBI registration seal for ${CONTACT.name}, registration ${CONTACT.registration}, valid ${CONTACT.validity}.`}
+    >
+      <defs>
+        <radialGradient id={`${id}-glow`}>
+          <stop offset="0" stopColor="#d6b574" stopOpacity="0.16" />
+          <stop offset="1" stopColor="#d6b574" stopOpacity="0" />
+        </radialGradient>
+        <path id={`${id}-ring`} d="M0 -174A174 174 0 1 1 0 174A174 174 0 1 1 0 -174" />
+      </defs>
+
+      <circle r="296" fill={`url(#${id}-glow)`} />
+
+      <g className="tm-gv-body">
+        {/* Hairline frame */}
+        {[290, 240].map((r) => (
+          <circle key={r} className="tm-gv-hair" r={r} pathLength="1" />
+        ))}
+        <circle className="tm-gv-dash" r="158" />
+
+        {/* 01 — braided security band */}
+        <g className="tm-gv-band">
+          {GV_BAND.map((d, k) => (
+            <path key={k} d={d} pathLength="1" />
+          ))}
+        </g>
+
+        {/* Registration text orbiting the seal */}
+        <g className="tm-gv-ring">
+          <g className="tm-gv-spin">
+            <text>
+              <textPath href={`#${id}-ring`} textLength="1080" lengthAdjust="spacing">
+                {GV_RING_TEXT}
+              </textPath>
+            </text>
+          </g>
+        </g>
+
+        {/* 03 — validity bezel: one tick per month, five years */}
+        <g className="tm-gv-validity">
+          <path className="tm-gv-track" d={GV_VALIDITY} />
+          {Array.from({ length: 61 }, (_, m) => {
+            const year = m % 12 === 0;
+            const [x1, y1] = gvPolar(230, gvArcDeg(m / 60));
+            const [x2, y2] = gvPolar(year ? 238 : 234, gvArcDeg(m / 60));
+            return <line key={m} className={`tm-gv-tick ${year ? "is-year" : ""}`} x1={x1} y1={y1} x2={x2} y2={y2} />;
+          })}
+          <path className="tm-gv-fill" d={GV_VALIDITY} pathLength="1" />
+          {GV_YEARS.map((year, i) => {
+            const [x, y] = gvPolar(206, gvArcDeg(i / 5));
+            return (
+              <text key={year} className="tm-gv-year" x={x} y={y + 4} textAnchor="middle">
+                {year}
+              </text>
             );
           })}
-        </div>
-      </div>
+          <text className="tm-gv-valid" x="0" y="232" textAnchor="middle">
+            VALID THROUGH 15 · 02 · 2031
+          </text>
+        </g>
 
-      <div className="tm-s-cockpit" aria-live="polite">
-        <div className="tm-s-cockpit-grid">
-          {/* Visual Telemetry Column */}
-          <div className="tm-s-cockpit-vis">
-            <StageVisual stageIndex={currentIndex} />
-          </div>
+        {/* 02 — three research lenses */}
+        {GV_LENSES.map((lens) => {
+          const [cx, cy] = gvPolar(GV_LENS_OFFSET, lens.angle);
+          const [lx, ly] = gvPolar(140, lens.angle);
+          return (
+            <g key={lens.name} className="tm-gv-lens">
+              <g transform={`translate(${cx} ${cy})`}>
+                <circle className="tm-gv-lens-ring" r="72" pathLength="1" />
+                <path className="tm-gv-rosette" d={GV_ROSETTE} pathLength="1" />
+              </g>
+              <text className="tm-gv-lens-label" x={lx} y={ly + 4} textAnchor="middle">
+                {lens.name}
+              </text>
+            </g>
+          );
+        })}
 
-          {/* Descriptive Intel Column */}
-          <div className="tm-s-cockpit-info">
-            <div className="tm-s-detail-number" aria-hidden="true">{shown.number}</div>
-            
-            <div className="tm-s-badge-row">
-              <span className="tm-stage-badge tm-stage-badge-gold">
-                <i /> {shown.name.toUpperCase()}
-              </span>
-              <span className="tm-stage-badge">
-                {shown.pill}
+        {/* Verified — stamped last */}
+        <g className="tm-gv-check">
+          <circle className="tm-gv-flash" r="30" />
+          <circle className="tm-gv-check-disc" r="30" />
+          <path className="tm-gv-check-mark" d="M-12 1l8 8 16-17" pathLength="1" />
+        </g>
+      </g>
+    </svg>
+  );
+}
+
+function LensGlyph({ active }: { active: number }) {
+  return (
+    <svg className="tm-gv-glyph" viewBox="-30 -30 60 60" aria-hidden="true">
+      {GV_LENSES.map((lens, i) => {
+        const [cx, cy] = gvPolar(9, lens.angle);
+        return <circle key={lens.name} cx={cx} cy={cy} r="13" className={i === active ? "is-active" : ""} />;
+      })}
+    </svg>
+  );
+}
+
+function GovernanceSection() {
+  return (
+    <section id="edge" className="tm-gv" aria-labelledby="edge-title">
+      <div className="tm-gv-stage">
+        <div className="tm-container tm-gv-layout">
+          <div className="tm-gv-copy-col">
+            <div className="tm-gv-meta">
+              <Eyebrow>05 / GOVERNANCE &amp; RESEARCH INTEGRITY</Eyebrow>
+              <span className="tm-gv-chip">
+                <span className="tm-pulse-dot" aria-hidden="true" />
+                SEBI REGISTERED · {CONTACT.registration}
               </span>
             </div>
 
-            <span className="tm-mono tm-s-meta-label">{shown.label}</span>
-            <h3 className="tm-s-title">{shown.title}</h3>
-            <p className="tm-s-desc">{shown.text}</p>
+            <h2 id="edge-title" className="tm-gv-title">
+              <span className="tm-gv-line"><span>Trust isn&apos;t a</span></span>
+              <span className="tm-gv-line"><span>visual effect.</span></span>
+              <span className="tm-gv-line tm-gold-text"><span>It&apos;s earned.</span></span>
+            </h2>
 
-            <div className="tm-s-telemetry-tag">
-              <span className="tm-mono">SYSTEM STATUS</span>
-              <span className="tm-mono tm-gold">{shown.signal}</span>
+            <p className="tm-gv-copy">
+              We don&apos;t publish a decorative performance curve, because a retrospective
+              chart is a promise no analyst can make. What we can show is who is behind
+              the research, how it is regulated, and how every view is structured.
+            </p>
+
+            <div className="tm-gv-stats">
+              {GV_STATS.map((stat) => (
+                <div className="tm-gv-stat" key={stat.tag}>
+                  <span className="tm-mono tm-gv-stat-tag">{stat.tag}</span>
+                  <strong>
+                    <span className="tm-gv-count" data-value={stat.value}>{stat.value}</span>
+                    {stat.suffix}
+                  </strong>
+                  <h3>{stat.title}</h3>
+                  <p>{stat.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <a
+              className="tm-text-link tm-gv-verify"
+              href="https://www.sebi.gov.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Verify on the SEBI official portal <Arrow diagonal />
+            </a>
+          </div>
+
+          <div className="tm-gv-seal-col">
+            <GovernanceSeal />
+          </div>
+        </div>
+      </div>
+
+      <div className="tm-container tm-gv-record">
+        {/* The registration, set out like a certificate */}
+        <article className="tm-gv-cert tm-gv-reveal" aria-labelledby="gv-cert-title">
+          <svg className="tm-gv-watermark" viewBox="-300 -300 600 600" aria-hidden="true">
+            {GV_BAND.map((d, k) => (
+              <path key={k} d={d} />
+            ))}
+            <path d={GV_ROSETTE} transform="scale(2.4)" />
+          </svg>
+
+          <header className="tm-gv-cert-head">
+            <div>
+              <span className="tm-mono tm-gold">OFFICIAL REGISTRATION DOSSIER</span>
+              <h3 id="gv-cert-title">SEBI Registered Research Analyst</h3>
+            </div>
+            <span className="tm-gv-chip is-solid">
+              <span className="tm-pulse-dot" aria-hidden="true" />
+              ACTIVE · INDIVIDUAL
+            </span>
+          </header>
+
+          <dl className="tm-gv-ledger">
+            <div>
+              <dt className="tm-mono">Registered name</dt>
+              <dd>{CONTACT.name}</dd>
+            </div>
+            <div>
+              <dt className="tm-mono">Registration category</dt>
+              <dd>Individual Research Analyst</dd>
+            </div>
+            <div>
+              <dt className="tm-mono">Registration number</dt>
+              <dd className="tm-gold">{CONTACT.registration}</dd>
+            </div>
+            <div>
+              <dt className="tm-mono">Validity period</dt>
+              <dd>{CONTACT.validity}</dd>
+            </div>
+            <div>
+              <dt className="tm-mono">Registered address</dt>
+              <dd>{CONTACT.address}</dd>
+            </div>
+            <div>
+              <dt className="tm-mono">SEBI head office</dt>
+              <dd>SEBI Bhavan, Plot No. C4-A, &apos;G&apos; Block, BKC, Bandra (E), Mumbai – 400 051</dd>
+            </div>
+          </dl>
+
+          <footer className="tm-gv-cert-foot">
+            <span className="tm-mono">Registration details can be independently verified with SEBI.</span>
+            <a
+              className="tm-button tm-button-ghost"
+              href="https://www.sebi.gov.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Verify credential</span>
+              <Arrow diagonal />
+            </a>
+          </footer>
+        </article>
+
+        <div className="tm-gv-columns">
+          <div className="tm-gv-panel tm-gv-reveal">
+            <span className="tm-mono tm-gold">CAPABILITIES</span>
+            <h3>Three-tier research framework</h3>
+            <ol className="tm-gv-lenses">
+              {GV_LENSES.map((lens, i) => (
+                <li key={lens.name}>
+                  <LensGlyph active={i} />
+                  <div>
+                    <h4>
+                      <span className="tm-mono">0{i + 1}</span> {lens.title}
+                    </h4>
+                    <p>{lens.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="tm-gv-panel tm-gv-reveal">
+            <span className="tm-mono tm-gold">STATUTORY</span>
+            <h3>Regulatory &amp; risk disclosures</h3>
+            <div className="tm-disclosures-accordion">
+              <details className="tm-disclosure" open>
+                <summary>
+                  <span>Market Risk Disclosure</span>
+                  <i className="tm-disclosure-arrow">+</i>
+                </summary>
+                <p>
+                  Investments in securities market are subject to market risks. Read all
+                  the related documents carefully before investing. Registration does not assure returns.
+                </p>
+              </details>
+
+              <details className="tm-disclosure">
+                <summary>
+                  <span>Registration & Performance Notice</span>
+                  <i className="tm-disclosure-arrow">+</i>
+                </summary>
+                <p>
+                  Registration granted by SEBI and certification from NISM in no way guarantee
+                  performance of the research analyst or provide any assurance of returns to investors.
+                </p>
+              </details>
+
+              <details className="tm-disclosure">
+                <summary>
+                  <span>Informational & Research Standard</span>
+                  <i className="tm-disclosure-arrow">+</i>
+                </summary>
+                <p>
+                  This platform is dedicated strictly to independent equity research and education.
+                  Charts and values are illustrative models, not portfolio management or guaranteed trade execution.
+                </p>
+              </details>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -789,7 +1311,7 @@ function ContactForm() {
         <p>Your message has been received. We will reply as soon as possible.</p>
         <button
           type="button"
-          className="tm-contact-submit-btn"
+          className="tm-button tm-contact-submit-btn"
           onClick={() => setStatus("idle")}
         >
           Send another message
@@ -800,7 +1322,10 @@ function ContactForm() {
 
   return (
     <form className={`tm-card-form ${status === "sending" ? "is-sending" : ""}`} onSubmit={onSubmit}>
-      <h3 className="tm-form-header-title">Contact Us</h3>
+      <div>
+        <span className="tm-mono tm-gold">PRIVATE INQUIRY</span>
+        <h3 className="tm-form-header-title">Contact Us</h3>
+      </div>
 
       <div className="tm-card-form-grid">
         {/* Row 1: First Name & Last Name */}
@@ -888,7 +1413,7 @@ function ContactForm() {
       <div className="tm-form-bottom-bar">
         <button
           type="submit"
-          className="tm-contact-submit-btn"
+          className="tm-button tm-contact-submit-btn"
           disabled={status === "sending"}
         >
           {status === "sending" ? (
@@ -932,7 +1457,14 @@ export default function Home() {
   const [landingPageArrived, setLandingPageArrived] = useState(false);
   const [heroAnimationStarted, setHeroAnimationStarted] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
-  const [focusedStage, setFocusedStage] = useState<number | null>(null);
+  const strategyTimelineRef = useRef<gsap.core.Timeline | null>(null);
+
+  /* Rail buttons scroll to the moment each stage is fully on screen */
+  function jumpToStage(index: number) {
+    const trigger = strategyTimelineRef.current?.scrollTrigger;
+    if (!trigger) return;
+    window.scrollTo({ top: trigger.labelToScroll(`stage-${index}`) + 2, behavior: "smooth" });
+  }
 
   /* If loader is not rendered on mount, mark landing page as arrived immediately */
   useEffect(() => {
@@ -1024,22 +1556,6 @@ export default function Home() {
           });
         });
 
-        gsap.to(".tm-edge-emblem", {
-          yPercent: -14,
-          rotate: 5,
-          ease: "none",
-          scrollTrigger: { trigger: ".tm-edge", start: "top bottom", end: "bottom top", scrub: 1 },
-        });
-
-        gsap.from(".tm-capability-card", {
-          x: 20,
-          opacity: 0,
-          stagger: 0.12,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".tm-capabilities-list", start: "top 85%", once: true },
-        });
-
         /* 06: emblem recedes while the form emerges */
         gsap.to(".tm-contact-emblem", {
           scale: 0.72,
@@ -1121,7 +1637,7 @@ export default function Home() {
 
             gsap.set(phPaths, { strokeDasharray: 1, strokeDashoffset: 1 });
             gsap.set(phDetails, { opacity: 0 });
-            gsap.set(phCards, { y: 35, opacity: 0 });
+            gsap.set(phCards, { x: 48, opacity: 0 });
 
             const phTl = gsap.timeline({
               scrollTrigger: {
@@ -1142,73 +1658,315 @@ export default function Home() {
               0,
             );
 
-            // 2. Logo geometric facets draw progressively across the scroll
-            phTl.to(
-              phPaths,
-              {
-                strokeDashoffset: 0,
-                stagger: 0.045,
-                duration: 2.2,
-                ease: "power1.inOut",
-              },
-              0.15,
-            );
-
-            // 3. Principle cards slide and illuminate in sync with drawing
+            // 2. Principle cards slide in toward the emblem as it draws
             phTl.to(
               phCards,
-              { y: 0, opacity: 1, stagger: 0.18, duration: 0.85, ease: "power2.out" },
-              0.9,
+              { x: 0, opacity: 1, stagger: 0.18, duration: 0.85, ease: "power2.out" },
+              0.6,
             );
 
-            // 4. Logo visor, dots and shoulder wedge emerge as lines complete
+            // 3. Logo visor, dots and shoulder wedge emerge as the lines complete
             phTl.to(
               phDetails,
               { opacity: 1, stagger: 0.08, duration: 0.5, ease: "power2.out" },
-              1.8,
+              1.2,
             );
 
-            // 5. Hold so user enjoys the completed logo before unpinning
-            phTl.to({}, { duration: 0.4 });
+            // 4. Hold so user enjoys the completed logo before unpinning
+            phTl.to({}, { duration: 0.6 });
+
+            // The facets start engraving as the section arrives, so the centre is
+            // never empty, and finish half-way through the pin
+            // (a timeline, not a lone tween, so pausing motion reverts it cleanly)
+            gsap
+              .timeline({
+                scrollTrigger: {
+                  trigger: phSection,
+                  start: "top 75%",
+                  end: () => `+=${window.innerHeight * 0.75 + 900}`,
+                  scrub: 0.6,
+                },
+              })
+              .to(phPaths, { strokeDashoffset: 0, stagger: 0.04, ease: "power1.inOut" });
           }
 
-          /* 04 — gold line travels through the system */
-          const strategyStage = root.querySelector<HTMLElement>(".tm-strategy-stage");
-          if (strategyStage) {
-            gsap.set(".tm-s-line", { strokeDashoffset: 1 });
-            gsap.timeline({
+          /* 04 — one chart runs the whole system: noise → structure → plan → outcome */
+          const strategy = root.querySelector<HTMLElement>(".tm-sx");
+          const strategySvg = strategy?.querySelector<SVGSVGElement>(".tm-sx-svg");
+          if (strategy && strategySvg) {
+            strategy.classList.add("is-scrolly");
+            const q = gsap.utils.selector(strategy);
+            const frame: StrategyFrame = { reveal: 0, noise: 1 };
+            const paint = () => paintStrategyChart(strategySvg, frame);
+            paint();
+
+            const stepParts = gsap.utils
+              .toArray<HTMLElement>(".tm-sx-step", strategy)
+              .map((step) => Array.from(step.children));
+            const at = { observe: 1, validate: 3.8, structure: 5.4, risk: 7, review: 8.6 };
+            const starts = Object.values(at);
+
+            gsap.set(q(".tm-sx-panel"), {
+              rotateX: 28,
+              y: 140,
+              scale: 0.84,
+              opacity: 0.2,
+              transformPerspective: 1600,
+              transformOrigin: "50% 100%",
+            });
+            gsap.set(stepParts.flat(), { autoAlpha: 0, y: 32, filter: "blur(8px)" });
+            gsap.set(q(".tm-sx-hud"), { autoAlpha: 0, y: 24 });
+            gsap.set(q(".tm-sx-hud-fill"), { scaleX: 0 });
+            gsap.set(
+              q(".tm-sx-grid, .tm-sx-cursor, .tm-sx-area, .tm-sx-accum, .tm-sx-level-label, .tm-sx-plan-label, .tm-sx-risk-label, .tm-sx-done"),
+              { opacity: 0 },
+            );
+            gsap.set(q(".tm-sx-line"), { color: "rgba(245, 241, 232, 0.5)" });
+            gsap.set(q(".tm-sx-level-line, .tm-sx-plan-bar"), { scaleX: 0, transformOrigin: "0% 50%" });
+            gsap.set(q(".tm-sx-touch, .tm-sx-entry-mark, .tm-sx-ratio, .tm-sx-done-ring"), {
+              scale: 0,
+              transformOrigin: "50% 50%",
+            });
+            gsap.set(q(".tm-sx-bar, .tm-sx-reward, .tm-sx-event-line"), { scaleY: 0, transformOrigin: "50% 100%" });
+            gsap.set(q(".tm-sx-loss"), { scaleY: 0, transformOrigin: "50% 0%" });
+            gsap.set(q(".tm-sx-vol-ma"), { strokeDasharray: 1, strokeDashoffset: 1 });
+
+            const tl = gsap.timeline({
+              defaults: { ease: "power2.out" },
               scrollTrigger: {
-                trigger: strategyStage,
-                start: "top 80px",
-                end: "+=2200",
+                trigger: q(".tm-sx-stage")[0],
+                start: "top top",
+                end: () => `+=${window.innerHeight * 5.5}`,
+                pin: true,
+                scrub: 0.9,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+            strategyTimelineRef.current = tl;
+
+            let current = -1;
+            tl.eventCallback("onUpdate", () => {
+              const time = tl.time();
+              const index = starts.reduce((found, start, i) => (time >= start - 0.3 ? i : found), 0);
+              if (index !== current) {
+                current = index;
+                setActiveStage(index);
+              }
+            });
+
+            /* Intro: the headline dissolves while the chart rises flat */
+            tl.to(q(".tm-sx-intro"), { autoAlpha: 0, scale: 0.92, y: -40, filter: "blur(12px)", duration: 0.8, ease: "power2.in" }, 0.1)
+              .to(q(".tm-sx-panel"), { rotateX: 0, y: 0, scale: 1, opacity: 1, duration: 1.1, ease: "power3.out" }, 0.2)
+              .to(q(".tm-sx-grid"), { opacity: 1, duration: 0.6 }, 0.6)
+              .to(q(".tm-sx-hud"), { autoAlpha: 1, y: 0, duration: 0.5 }, 0.8);
+
+            /* Copy for each stage blurs in, then hands over to the next */
+            stepParts.forEach((parts, i) => {
+              tl.addLabel(`stage-${i}`, starts[i] + 0.6).to(
+                parts,
+                { autoAlpha: 1, y: 0, filter: "blur(0px)", stagger: 0.06, duration: 0.5 },
+                starts[i],
+              );
+              if (i < stepParts.length - 1) {
+                tl.to(
+                  parts,
+                  { autoAlpha: 0, y: -24, filter: "blur(6px)", stagger: 0.03, duration: 0.3, ease: "power2.in" },
+                  starts[i + 1] - 0.35,
+                ).to(
+                  q(".tm-sx-hud-fill"),
+                  { scaleX: (i + 1) / (stepParts.length - 1), duration: starts[i + 1] - starts[i], ease: "none" },
+                  starts[i],
+                );
+              }
+            });
+
+            /* 01 Observe — chaos draws in, then the noise is removed */
+            tl.to(q(".tm-sx-cursor"), { opacity: 1, duration: 0.2 }, at.observe)
+              .to(frame, { reveal: SX_NOW, duration: 1.4, ease: "none", onUpdate: paint }, at.observe)
+              .to(frame, { noise: 0, duration: 0.9, ease: "power2.inOut", onUpdate: paint }, at.observe + 1.5)
+              .to(q(".tm-sx-line"), { color: "#d6b574", duration: 0.9 }, at.observe + 1.5)
+              .to(q(".tm-sx-area"), { opacity: 1, duration: 0.9 }, at.observe + 1.6)
+              .to(q(".tm-sx-level-line"), { scaleX: 1, duration: 0.7, stagger: 0.12, ease: "power3.inOut" }, at.observe + 1.7)
+              .to(q(".tm-sx-level-label"), { opacity: 1, duration: 0.4, stagger: 0.12 }, at.observe + 2.1)
+              .to(q(".tm-sx-touch"), { scale: 1, duration: 0.3, stagger: 0.05, ease: "back.out(2.5)" }, at.observe + 2.2);
+
+            /* 02 Validate — participation builds underneath the price */
+            tl.to(q(".tm-sx-bar"), { scaleY: 1, duration: 0.5, stagger: 0.012, ease: "power3.out" }, at.validate + 0.1)
+              .to(q(".tm-sx-vol-ma"), { strokeDashoffset: 0, duration: 0.8, ease: "none" }, at.validate + 0.4)
+              .to(q(".tm-sx-accum"), { opacity: 1, duration: 0.4 }, at.validate + 0.9);
+
+            /* 03 Structure — entry, target and invalidation are drawn */
+            tl.to(q(".tm-sx-levels"), { opacity: 0.35, duration: 0.4 }, at.structure)
+              .to(q(".tm-sx-entry-mark"), { scale: 1, duration: 0.35, ease: "back.out(2.5)" }, at.structure + 0.1)
+              .to(q(".tm-sx-plan-bar"), { scaleX: 1, duration: 0.7, stagger: 0.15, ease: "power3.inOut" }, at.structure + 0.25)
+              .to(q(".tm-sx-plan-label"), { opacity: 1, duration: 0.4, stagger: 0.12 }, at.structure + 0.7);
+
+            /* 04 Define risk — exposure is shaded, events are mapped */
+            tl.to(q(".tm-sx-reward"), { scaleY: 1, duration: 0.7, ease: "power3.out" }, at.risk + 0.1)
+              .to(q(".tm-sx-loss"), { scaleY: 1, duration: 0.5, ease: "power3.out" }, at.risk + 0.1)
+              .to(q(".tm-sx-ratio"), { scale: 1, duration: 0.4, ease: "back.out(2)" }, at.risk + 0.6)
+              .to(q(".tm-sx-event-line"), { scaleY: 1, duration: 0.5, stagger: 0.15, ease: "power2.inOut" }, at.risk + 0.7)
+              .to(q(".tm-sx-risk-label"), { opacity: 1, duration: 0.4, stagger: 0.1 }, at.risk + 0.9);
+
+            /* 05 Review — the view plays out against its stated parameters */
+            tl.to(q(".tm-sx-risk"), { opacity: 0.45, duration: 0.4 }, at.review)
+              .to(frame, { reveal: SX_LAST, duration: 1.5, ease: "power1.inOut", onUpdate: paint }, at.review + 0.2)
+              .to(q(".tm-sx-done"), { opacity: 1, duration: 0.4 }, at.review + 1.7)
+              .to(q(".tm-sx-done-ring"), { scale: 1, duration: 0.4, ease: "back.out(2)" }, at.review + 1.7)
+              .to({}, { duration: 0.4 });
+          }
+
+          /* 05 — the seal is engraved line by line while its numbers count up */
+          const governance = root.querySelector<HTMLElement>(".tm-gv");
+          const counts = governance
+            ? gsap.utils.toArray<HTMLElement>(".tm-gv-count", governance)
+            : [];
+          if (governance) {
+            const q = gsap.utils.selector(governance);
+            const stats = q(".tm-gv-stat");
+            const lenses = q(".tm-gv-lens");
+            const center = { transformOrigin: "50% 50%" };
+
+            counts.forEach((el) => (el.textContent = "0"));
+            gsap.set(q(".tm-gv-line > span"), { yPercent: 110 });
+            gsap.set(q(".tm-gv-copy, .tm-gv-verify, .tm-gv-meta"), { autoAlpha: 0, y: 24 });
+            gsap.set(stats, { autoAlpha: 0.25, y: 16 });
+            gsap.set(q(".tm-gv-seal"), { scale: 0.82, rotation: -24, ...center });
+            gsap.set(
+              q(".tm-gv-hair, .tm-gv-band path, .tm-gv-fill, .tm-gv-lens-ring, .tm-gv-rosette, .tm-gv-check-mark"),
+              { strokeDasharray: 1, strokeDashoffset: 1 },
+            );
+            gsap.set(q(".tm-gv-band"), { rotation: -40, ...center });
+            gsap.set(q(".tm-gv-ring"), { autoAlpha: 0, rotation: -70, ...center });
+            gsap.set(q(".tm-gv-dash, .tm-gv-track, .tm-gv-tick, .tm-gv-lens-label, .tm-gv-valid"), { autoAlpha: 0 });
+            gsap.set(q(".tm-gv-year"), { autoAlpha: 0.15 });
+            gsap.set(q(".tm-gv-check"), { scale: 0, ...center });
+            gsap.set(q(".tm-gv-flash"), { scale: 1, autoAlpha: 0, ...center });
+
+            const tl = gsap.timeline({
+              defaults: { ease: "power2.out" },
+              scrollTrigger: {
+                trigger: q(".tm-gv-stage")[0],
+                start: "top top",
+                end: () => `+=${window.innerHeight * 3.2}`,
                 pin: true,
                 scrub: 0.8,
                 anticipatePin: 1,
-                onUpdate(self) {
-                  setActiveStage(Math.min(STAGES.length - 1, Math.floor(self.progress * STAGES.length)));
-                },
+                invalidateOnRefresh: true,
               },
-            })
-              .to(".tm-s-line", { strokeDashoffset: 0, duration: 1, ease: "none" })
-              .to({}, { duration: 0.2 });
+            });
 
-            return () => setActiveStage(STAGES.length - 1);
+            const count = (index: number, at: number, duration: number) => {
+              const el = counts[index];
+              const target = Number(el?.dataset.value ?? 0);
+              const value = { n: 0 };
+              tl.to(stats[index], { autoAlpha: 1, y: 0, duration: 0.4 }, at).to(
+                value,
+                {
+                  n: target,
+                  duration,
+                  ease: "power1.out",
+                  onUpdate: () => {
+                    if (el) el.textContent = String(Math.round(value.n));
+                  },
+                },
+                at,
+              );
+            };
+
+            /* Statement rises; the seal settles into place */
+            tl.to(q(".tm-gv-meta"), { autoAlpha: 1, y: 0, duration: 0.4 }, 0)
+              .to(q(".tm-gv-line > span"), { yPercent: 0, stagger: 0.12, duration: 0.7, ease: "power3.out" }, 0)
+              .to(q(".tm-gv-copy, .tm-gv-verify"), { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.5 }, 0.5)
+              .to(q(".tm-gv-seal"), { scale: 1, rotation: 0, duration: 3.6, ease: "power2.out" }, 0)
+              .to(q(".tm-gv-hair"), { strokeDashoffset: 0, stagger: 0.15, duration: 0.9, ease: "power1.inOut" }, 0);
+
+            /* 01 — the braided band engraves itself (experience) */
+            tl.to(q(".tm-gv-band path"), { strokeDashoffset: 0, stagger: 0.14, duration: 1.2, ease: "power1.inOut" }, 0.2)
+              .to(q(".tm-gv-band"), { rotation: 0, duration: 1.6, ease: "power2.out" }, 0.2);
+            count(0, 0.8, 0.9);
+
+            /* Registration text swings into orbit */
+            tl.to(q(".tm-gv-ring"), { autoAlpha: 1, rotation: 0, duration: 1.1, ease: "power3.out" }, 1)
+              .to(q(".tm-gv-dash"), { autoAlpha: 1, duration: 0.6 }, 1.2);
+
+            /* 02 — three lenses are turned, one after another */
+            lenses.forEach((lens, i) => {
+              const at = 1.5 + i * 0.3;
+              tl.to(lens.querySelectorAll(".tm-gv-lens-ring, .tm-gv-rosette"), {
+                strokeDashoffset: 0,
+                stagger: 0.1,
+                duration: 0.9,
+                ease: "power1.inOut",
+              }, at).to(lens.querySelector(".tm-gv-lens-label"), { autoAlpha: 1, duration: 0.3 }, at + 0.5);
+            });
+            count(1, 1.6, 0.9);
+
+            /* 03 — validity runs February 2026 → February 2031 */
+            tl.to(q(".tm-gv-track, .tm-gv-tick"), { autoAlpha: 1, duration: 0.3, stagger: 0.004 }, 2.5)
+              .to(q(".tm-gv-fill"), { strokeDashoffset: 0, duration: 1.2, ease: "none" }, 2.7)
+              .to(q(".tm-gv-year"), { autoAlpha: 1, duration: 0.15, stagger: 0.21 }, 2.7)
+              .to(q(".tm-gv-valid"), { autoAlpha: 1, duration: 0.3 }, 3.8);
+            count(2, 2.7, 1.2);
+
+            /* Verified — the stamp lands */
+            tl.to(q(".tm-gv-check"), { scale: 1, duration: 0.45, ease: "back.out(2.2)" }, 4)
+              .to(q(".tm-gv-check-mark"), { strokeDashoffset: 0, duration: 0.35, ease: "power2.inOut" }, 4.2)
+              .to(q(".tm-gv-flash"), { keyframes: [{ autoAlpha: 0.7, duration: 0.05 }, { scale: 5, autoAlpha: 0, duration: 0.6 }] }, 4.2)
+              .to({}, { duration: 0.5 });
+
+            /* The record below rises in once the seal is complete */
+            q(".tm-gv-reveal").forEach((el) => {
+              gsap.from(el, {
+                y: 40,
+                autoAlpha: 0,
+                duration: 0.9,
+                ease: "power3.out",
+                scrollTrigger: { trigger: el, start: "top 88%", once: true },
+              });
+            });
           }
+
+          return () => {
+            counts.forEach((el) => (el.textContent = el.dataset.value ?? ""));
+            strategy?.classList.remove("is-scrolly");
+            if (strategySvg) paintStrategyChart(strategySvg, SX_FINAL);
+            strategyTimelineRef.current = null;
+            setActiveStage(STAGES.length - 1);
+          };
         },
       );
 
       /* Without the pinned sequence, treat every stage as reached */
       media.add("(max-width: 999px), (max-height: 679px), (prefers-reduced-motion: reduce)", () => {
         setActiveStage(STAGES.length - 1);
-        gsap.set(".tm-s-line", { strokeDashoffset: 0 });
         gsap.set(".tm-ph-emblem .tm-emblem-path", { strokeDashoffset: 0 });
         gsap.set(
           ".tm-ph-emblem .tm-emblem-visor, .tm-ph-emblem .tm-emblem-dot, .tm-ph-emblem .tm-emblem-wedge",
           { opacity: 1 },
         );
-        gsap.set(".tm-ph-principle", { y: 0, opacity: 1 });
+        gsap.set(".tm-ph-principle", { x: 0, opacity: 1 });
         gsap.set(".tm-ph-word > span", { yPercent: 0 });
       });
+
+      /* Small or short screens: no pin, but the emblem still engraves as it scrolls in */
+      media.add(
+        "(prefers-reduced-motion: no-preference) and (max-width: 999px), (prefers-reduced-motion: no-preference) and (max-height: 679px)",
+        () => {
+          const emblem = root.querySelector<SVGSVGElement>(".tm-ph-emblem");
+          if (!emblem) return;
+          const paths = emblem.querySelectorAll(".tm-emblem-path");
+          const details = emblem.querySelectorAll(".tm-emblem-visor, .tm-emblem-dot, .tm-emblem-wedge");
+
+          gsap.set(paths, { strokeDasharray: 1, strokeDashoffset: 1 });
+          gsap.set(details, { opacity: 0 });
+          gsap
+            .timeline({ scrollTrigger: { trigger: emblem, start: "top 90%", end: "center 40%", scrub: 0.6 } })
+            .to(paths, { strokeDashoffset: 0, stagger: 0.04, ease: "power1.inOut" })
+            .to(details, { opacity: 1, stagger: 0.08, duration: 0.3 }, ">-0.3");
+        },
+      );
     }, root);
 
     const refresh = requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -1525,57 +2283,66 @@ export default function Home() {
         {/* 03 — THE MONK'S PHILOSOPHY (ivory)                              */}
         {/* ============================================================== */}
         <section id="philosophy" className="tm-philosophy" aria-labelledby="ph-title">
-          <Emblem className="tm-ph-emblem" />
-
           <div className="tm-container">
             <div className="tm-ph-top tm-mono">
               <span>03 / THE MONK'S PHILOSOPHY</span>
               <span>CALM IS A COMPETITIVE ADVANTAGE</span>
             </div>
 
-            <h2 id="ph-title" className="tm-ph-title">
-              <span className="tm-ph-word"><span>Discipline</span></span>
-              <span className="tm-ph-word tm-ph-word-small"><span>over</span></span>
-              <span className="tm-ph-word"><span>Impulse.</span></span>
-            </h2>
+            <div className="tm-ph-stage">
+              {/* Left — the statement */}
+              <div className="tm-ph-side">
+                <h2 id="ph-title" className="tm-ph-title">
+                  <span className="tm-ph-word"><span>Discipline</span></span>
+                  <span className="tm-ph-word tm-ph-word-small"><span>over</span></span>
+                  <span className="tm-ph-word"><span>Impulse.</span></span>
+                </h2>
 
-            <p className="tm-ph-copy tm-reveal">
-              Markets move. Emotions fluctuate. Our philosophy begins with a commitment
-              to process, research and disciplined decision-making.
-            </p>
+                <p className="tm-ph-copy tm-reveal">
+                  Markets move. Emotions fluctuate. Our philosophy begins with a commitment
+                  to process, research and disciplined decision-making.
+                </p>
+              </div>
 
-            <div className="tm-ph-principles">
-              {PRINCIPLES.map((p) => (
-                <article className="tm-ph-principle" key={p.number}>
-                  <div className="tm-ph-card-bar" aria-hidden="true" />
-                  <div className="tm-ph-card-header">
-                    <span className="tm-ph-principle-badge">{p.number}</span>
-                    <span className="tm-ph-principle-tag">{p.tag}</span>
-                    <div className="tm-ph-icon-box" aria-hidden="true">
-                      {p.iconType === "chart" && (
-                        <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
-                          <path d="M3 3v18h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                          <path d="M7 14l4-4 4 3 5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
-                      {p.iconType === "balance" && (
-                        <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
-                          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
-                          <path d="M12 4v16M4 12h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                        </svg>
-                      )}
-                      {p.iconType === "shield" && (
-                        <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
-                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      )}
+              {/* Centre — the emblem draws itself on scroll */}
+              <div className="tm-ph-center" aria-hidden="true">
+                <Emblem className="tm-ph-emblem" />
+              </div>
+
+              {/* Right — the principles */}
+              <div className="tm-ph-principles">
+                {PRINCIPLES.map((p) => (
+                  <article className="tm-ph-principle" key={p.number}>
+                    <div className="tm-ph-card-bar" aria-hidden="true" />
+                    <div className="tm-ph-card-header">
+                      <span className="tm-ph-principle-badge">{p.number}</span>
+                      <span className="tm-ph-principle-tag">{p.tag}</span>
+                      <div className="tm-ph-icon-box" aria-hidden="true">
+                        {p.iconType === "chart" && (
+                          <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
+                            <path d="M3 3v18h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                            <path d="M7 14l4-4 4 3 5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                        {p.iconType === "balance" && (
+                          <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
+                            <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
+                            <path d="M12 4v16M4 12h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                          </svg>
+                        )}
+                        {p.iconType === "shield" && (
+                          <svg viewBox="0 0 24 24" fill="none" className="tm-ph-icon">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <h3>{p.title}</h3>
-                  <p>{p.text}</p>
-                </article>
-              ))}
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -1583,257 +2350,12 @@ export default function Home() {
         {/* ============================================================== */}
         {/* 04 — INSIDE THE STRATEGY                                        */}
         {/* ============================================================== */}
-        <section id="strategy" className="tm-strategy" aria-labelledby="strategy-title">
-          <div className="tm-container tm-strategy-stage">
-            <div className="tm-section-heading">
-              <div>
-                <Eyebrow>04 / INSIDE THE STRATEGY</Eyebrow>
-                <h2 id="strategy-title">
-                  One system.<br />
-                  <span className="tm-gold-text">Five deliberate stages.</span>
-                </h2>
-              </div>
-
-              <p>
-                Research is not a feeling. It is a sequence — each stage with its own
-                inputs, checks and stated limits. Scroll, hover or tab through the system.
-              </p>
-            </div>
-
-            <StrategyDiagram
-              active={activeStage}
-              focused={focusedStage}
-              onFocus={setFocusedStage}
-            />
-
-            <p className="tm-fine-print">
-              Trading Monks provides independent equity research under SEBI Research
-              Analyst registration. It does not execute trades or manage client capital.
-            </p>
-          </div>
-        </section>
+        <StrategySection activeStage={activeStage} onJump={jumpToStage} />
 
         {/* ============================================================== */}
-        {/* 05 — THE EDGE                                                   */}
+        {/* 05 — GOVERNANCE & RESEARCH INTEGRITY                            */}
         {/* ============================================================== */}
-        {/* ============================================================== */}
-        {/* 05 — THE EDGE & GOVERNANCE                                      */}
-        {/* ============================================================== */}
-        <section id="edge" className="tm-edge" aria-labelledby="edge-title">
-          <Emblem className="tm-edge-emblem" />
-
-          <div className="tm-container tm-edge-container">
-            {/* Header Statement */}
-            <div className="tm-edge-header">
-              <div className="tm-edge-header-top">
-                <Eyebrow>05 / GOVERNANCE & RESEARCH INTEGRITY</Eyebrow>
-                <div className="tm-edge-badge">
-                  <span className="tm-pulse-dot" />
-                  <span>SEBI REGISTERED · {CONTACT.registration}</span>
-                </div>
-              </div>
-
-              <div className="tm-edge-header-grid">
-                <h2 id="edge-title" className="tm-reveal">
-                  Trust isn't a visual effect.<br />
-                  <span className="tm-gold-text">It's earned.</span>
-                </h2>
-                <div className="tm-edge-intro-copy tm-reveal">
-                  <p className="tm-body-copy">
-                    We don't publish a decorative performance curve, because a retrospective
-                    chart is a promise no analyst can make. What we can show is who is
-                    behind the research, how it is regulated, and how every view is structured.
-                  </p>
-                  <a
-                    className="tm-edge-verify-btn"
-                    href="https://www.sebi.gov.in/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Verify on SEBI Official Portal</span>
-                    <Arrow diagonal />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* 3 Metric Monoliths */}
-            <div className="tm-edge-stats tm-reveal">
-              <div className="tm-edge-stat">
-                <div className="tm-edge-stat-header">
-                  <strong>
-                    <span className="tm-count" data-value="10">10</span>+
-                  </strong>
-                  <span className="tm-edge-stat-pill">EXPERIENCE</span>
-                </div>
-                <h4>Years of Market Analysis</h4>
-                <p>Studying market behaviour, price dynamics, institutional volume, and structural cycles.</p>
-              </div>
-
-              <div className="tm-edge-stat">
-                <div className="tm-edge-stat-header">
-                  <strong>
-                    <span className="tm-count" data-value="3">3</span>
-                  </strong>
-                  <span className="tm-edge-stat-pill">METHODOLOGY</span>
-                </div>
-                <h4>Integrated Research Lenses</h4>
-                <p>Synthesizing technical structure, business fundamentals, and explicit risk boundaries.</p>
-              </div>
-
-              <div className="tm-edge-stat">
-                <div className="tm-edge-stat-header">
-                  <strong>
-                    <span className="tm-count" data-value="5">5</span>
-                  </strong>
-                  <span className="tm-edge-stat-pill">REGULATORY</span>
-                </div>
-                <h4>Year Registration Validity</h4>
-                <p>Registered validity period granted by SEBI through February 15, 2031 under RA Regulations.</p>
-              </div>
-            </div>
-
-            {/* 2-Column Institutional Showcase */}
-            <div className="tm-edge-showcase">
-              {/* Left Column: Official Certificate Dossier */}
-              <div className="tm-edge-dossier tm-reveal">
-                <div className="tm-dossier-card">
-                  <div className="tm-dossier-header">
-                    <div className="tm-dossier-stamp">
-                      <span className="tm-stamp-icon">✓</span>
-                      <div>
-                        <span className="tm-mono tm-gold">OFFICIAL REGISTRATION DOSSIER</span>
-                        <h4>SEBI Registered Research Analyst</h4>
-                      </div>
-                    </div>
-                    <span className="tm-mono tm-dossier-status">ACTIVE · INDIVIDUAL</span>
-                  </div>
-
-                  <div className="tm-dossier-divider" />
-
-                  <dl className="tm-dossier-grid">
-                    <div className="tm-dossier-item">
-                      <dt className="tm-mono">REGISTERED NAME</dt>
-                      <dd>{CONTACT.name}</dd>
-                    </div>
-                    <div className="tm-dossier-item">
-                      <dt className="tm-mono">REGISTRATION CATEGORY</dt>
-                      <dd>Individual Research Analyst</dd>
-                    </div>
-                    <div className="tm-dossier-item">
-                      <dt className="tm-mono">REGISTRATION NUMBER</dt>
-                      <dd className="tm-gold">{CONTACT.registration}</dd>
-                    </div>
-                    <div className="tm-dossier-item">
-                      <dt className="tm-mono">VALIDITY PERIOD</dt>
-                      <dd>{CONTACT.validity}</dd>
-                    </div>
-                    <div className="tm-dossier-item tm-dossier-item-full">
-                      <dt className="tm-mono">REGISTERED ADDRESS</dt>
-                      <dd>{CONTACT.address}</dd>
-                    </div>
-                  </dl>
-
-                  <div className="tm-dossier-footer">
-                    <div className="tm-dossier-sebi">
-                      <span className="tm-mono">SEBI HEAD OFFICE</span>
-                      <p>SEBI Bhavan, Plot No. C4-A, 'G' Block, BKC, Bandra (E), Mumbai – 400 051</p>
-                    </div>
-                    <a
-                      className="tm-button tm-button-ghost tm-dossier-action"
-                      href="https://www.sebi.gov.in/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span>Verify Credential</span>
-                      <Arrow diagonal />
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Capabilities & Disclosures */}
-              <div className="tm-edge-insights tm-reveal">
-                {/* 3 Capabilities */}
-                <div className="tm-capabilities-group">
-                  <div className="tm-edge-block-title">
-                    <span className="tm-mono tm-gold">CAPABILITIES</span>
-                    <h3>Three-Tier Research Framework</h3>
-                  </div>
-
-                  <div className="tm-capabilities-list">
-                    <div className="tm-capability-card">
-                      <span className="tm-capability-number">01</span>
-                      <div>
-                        <h4>Technical Structure</h4>
-                        <p>Support, resistance, consolidation, trend strength, breakout geometry, momentum, and volume delta.</p>
-                      </div>
-                    </div>
-
-                    <div className="tm-capability-card">
-                      <span className="tm-capability-number">02</span>
-                      <div>
-                        <h4>Business Fundamentals</h4>
-                        <p>Earnings trajectory, revenue quality, balance-sheet strength, governance, and competitive position.</p>
-                      </div>
-                    </div>
-
-                    <div className="tm-capability-card">
-                      <span className="tm-capability-number">03</span>
-                      <div>
-                        <h4>Risk Controls</h4>
-                        <p>Downside exposure, invalidation levels, volatility parameters, liquidity, and event risk stated upfront.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Disclosures Drawer */}
-                <div className="tm-disclosures-card">
-                  <div className="tm-edge-block-title">
-                    <span className="tm-mono tm-gold">STATUTORY</span>
-                    <h3>Regulatory & Risk Disclosures</h3>
-                  </div>
-
-                  <div className="tm-disclosures-accordion">
-                    <details className="tm-disclosure" open>
-                      <summary>
-                        <span>Market Risk Disclosure</span>
-                        <i className="tm-disclosure-arrow">+</i>
-                      </summary>
-                      <p>
-                        Investments in securities market are subject to market risks. Read all
-                        the related documents carefully before investing. Registration does not assure returns.
-                      </p>
-                    </details>
-
-                    <details className="tm-disclosure">
-                      <summary>
-                        <span>Registration & Performance Notice</span>
-                        <i className="tm-disclosure-arrow">+</i>
-                      </summary>
-                      <p>
-                        Registration granted by SEBI and certification from NISM in no way guarantee
-                        performance of the research analyst or provide any assurance of returns to investors.
-                      </p>
-                    </details>
-
-                    <details className="tm-disclosure">
-                      <summary>
-                        <span>Informational & Research Standard</span>
-                        <i className="tm-disclosure-arrow">+</i>
-                      </summary>
-                      <p>
-                        This platform is dedicated strictly to independent equity research and education.
-                        Charts and values are illustrative models, not portfolio management or guaranteed trade execution.
-                      </p>
-                    </details>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <GovernanceSection />
 
         {/* ============================================================== */}
         {/* 05.5 — SOCIAL PROOF & TESTIMONIALS                              */}
@@ -1850,12 +2372,7 @@ export default function Home() {
         {/* 06 — THE INVITATION                                             */}
         {/* ============================================================== */}
         <section id="contact" className="tm-contact" aria-labelledby="contact-title">
-          {/* Animated Glowing Aurora Backdrop */}
-          <div className="tm-contact-aurora-bg" aria-hidden="true">
-            <div className="tm-aurora-orb tm-aurora-cyan" />
-            <div className="tm-aurora-orb tm-aurora-magenta" />
-            <div className="tm-aurora-orb tm-aurora-gold" />
-          </div>
+          <div className="tm-contact-glow" aria-hidden="true" />
 
           <Emblem className="tm-contact-emblem" metallic />
 
@@ -1863,15 +2380,11 @@ export default function Home() {
             <div className="tm-contact-card tm-reveal">
               {/* Left Column: Get In Touch */}
               <div className="tm-contact-col-info">
-                <div className="tm-contact-pill">
-                  <span className="tm-contact-pill-light" />
-                  <span>Contact</span>
-                </div>
-
                 <div className="tm-contact-heading-group">
+                  <Eyebrow>06 / THE INVITATION</Eyebrow>
                   <h2 id="contact-title" className="tm-contact-main-title">
                     Get In touch<br />
-                    <span>with us!</span>
+                    <span className="tm-gold-text">with us!</span>
                   </h2>
                   <p className="tm-contact-desc">
                     Have questions or ideas? We&apos;d love to hear from you. Reach out anytime
@@ -1880,9 +2393,9 @@ export default function Home() {
                 </div>
 
                 <div className="tm-contact-left-bottom">
-                  <a href={`mailto:${CONTACT.email}`} className="tm-contact-cta-btn">
+                  <a href={`mailto:${CONTACT.email}`} className="tm-button tm-contact-cta-btn">
                     <span>Contact Us</span>
-                    <Arrow />
+                    <Arrow diagonal />
                   </a>
 
                   <div className="tm-contact-direct-list">
