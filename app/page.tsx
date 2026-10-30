@@ -72,7 +72,18 @@ const TESTIMONIALS = [
   },
 ];
 
-const NAV = [
+type NavItem = { label: string; href: string; inquiry?: string };
+
+/* Research services open the contact form with the matching inquiry selected */
+const NAV_PRIMARY: NavItem[] = [
+  { label: "RA Compliance", href: "#edge" },
+  { label: "Equity Swing Trading Research", href: "#contact", inquiry: "Equity swing trading research" },
+  { label: "Option Selling Research", href: "#contact", inquiry: "Option selling research" },
+  { label: "Option Buying", href: "#contact", inquiry: "Option buying research" },
+];
+
+/* Page sections, grouped under "More" */
+const NAV_MORE = [
   ["Markets", "#market"],
   ["Philosophy", "#philosophy"],
   ["Approach", "#strategy"],
@@ -185,6 +196,9 @@ const STAGES = [
 
 const INQUIRY_TYPES = [
   "Research inquiry",
+  "Equity swing trading research",
+  "Option selling research",
+  "Option buying research",
   "Professional dialogue",
   "Collaboration",
   "Media",
@@ -1271,7 +1285,13 @@ function GovernanceSection() {
 
 type FormStatus = "idle" | "sending" | "sent" | "fallback";
 
-function ContactForm() {
+function ContactForm({
+  inquiry,
+  onInquiryChange,
+}: {
+  inquiry: string;
+  onInquiryChange: (value: string) => void;
+}) {
   const id = useId();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [fallbackHref, setFallbackHref] = useState("");
@@ -1386,7 +1406,8 @@ function ContactForm() {
           <select
             id={`${id}-inquiry`}
             name="inquiry"
-            defaultValue={INQUIRY_TYPES[0]}
+            value={inquiry}
+            onChange={(event) => onInquiryChange(event.target.value)}
             className="tm-input-clean tm-select-clean"
           >
             {INQUIRY_TYPES.map((type) => (
@@ -1451,6 +1472,9 @@ export default function Home() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [inquiry, setInquiry] = useState(INQUIRY_TYPES[0]);
+  const moreRef = useRef<HTMLDivElement>(null);
   const [motionPaused, setMotionPaused] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [heroRevealed, setHeroRevealed] = useState(false);
@@ -2040,6 +2064,32 @@ export default function Home() {
     };
   }, [menuOpen]);
 
+  /* "More" dropdown dismissal */
+  useEffect(() => {
+    if (!moreOpen) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMoreOpen(false);
+        moreRef.current?.querySelector("button")?.focus();
+      }
+    }
+    function onOutside(event: PointerEvent) {
+      if (!moreRef.current?.contains(event.target as Node)) setMoreOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onOutside);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onOutside);
+    };
+  }, [moreOpen]);
+
+  function followNav(item: NavItem) {
+    if (item.inquiry) setInquiry(item.inquiry);
+    setMenuOpen(false);
+    setMoreOpen(false);
+  }
+
   return (
     <div ref={rootRef} id="top" className={`tm-site ${motionPaused ? "tm-motion-paused" : ""}`}>
       {showLoader && (
@@ -2064,9 +2114,33 @@ export default function Home() {
           <Brand />
 
           <nav className="tm-desktop-nav" aria-label="Primary navigation">
-            {NAV.map(([label, href]) => (
-              <a href={href} key={href}>{label}</a>
+            {NAV_PRIMARY.map((item) => (
+              <a href={item.href} key={item.label} onClick={() => followNav(item)}>
+                {item.label}
+              </a>
             ))}
+
+            <div ref={moreRef} className={`tm-nav-more ${moreOpen ? "is-open" : ""}`}>
+              <button
+                type="button"
+                className="tm-nav-more-toggle"
+                aria-expanded={moreOpen}
+                aria-controls="tm-nav-more-panel"
+                onClick={() => setMoreOpen((v) => !v)}
+              >
+                More
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M2.5 4.5 6 8l3.5-3.5" />
+                </svg>
+              </button>
+              <div id="tm-nav-more-panel" className="tm-nav-more-panel">
+                {NAV_MORE.map(([label, href]) => (
+                  <a href={href} key={href} onClick={() => setMoreOpen(false)}>
+                    {label} <Arrow diagonal />
+                  </a>
+                ))}
+              </div>
+            </div>
           </nav>
 
           <div className="tm-header-actions">
@@ -2113,8 +2187,14 @@ export default function Home() {
         </div>
 
         <nav id="tm-mobile-nav" className="tm-mobile-nav" aria-label="Mobile navigation" hidden={!menuOpen}>
-          {NAV.map(([label, href]) => (
-            <a href={href} key={href} onClick={() => setMenuOpen(false)}>
+          {NAV_PRIMARY.map((item) => (
+            <a href={item.href} key={item.label} onClick={() => followNav(item)}>
+              {item.label} <Arrow diagonal />
+            </a>
+          ))}
+          <span className="tm-mobile-nav-group tm-mono">More</span>
+          {NAV_MORE.map(([label, href]) => (
+            <a href={href} key={href} className="is-secondary" onClick={() => setMenuOpen(false)}>
               {label} <Arrow diagonal />
             </a>
           ))}
@@ -2418,7 +2498,7 @@ export default function Home() {
               {/* Right Column: Contact Us Form */}
               <div className="tm-contact-col-form">
                 <div className="tm-contact-inner-box">
-                  <ContactForm />
+                  <ContactForm inquiry={inquiry} onInquiryChange={setInquiry} />
                 </div>
               </div>
             </div>
