@@ -13,18 +13,52 @@
   },
   "nav": {
     "primary": [
-      { "label": "RA Compliance", "href": "#edge", "inquiry": "" },
-      { "label": "Equity Swing Trading Research", "href": "#contact", "inquiry": "Equity swing trading research" },
-      { "label": "Option Selling Research", "href": "#contact", "inquiry": "Option selling research" },
-      { "label": "Option Buying", "href": "#contact", "inquiry": "Option buying research" }
+      {
+        "label": "RA Compliance",
+        "href": "#edge",
+        "inquiry": ""
+      },
+      {
+        "label": "Equity Swing Trading Research",
+        "href": "#contact",
+        "inquiry": "Equity swing trading research"
+      },
+      {
+        "label": "Option Selling Research",
+        "href": "#contact",
+        "inquiry": "Option selling research"
+      },
+      {
+        "label": "Option Buying",
+        "href": "#contact",
+        "inquiry": "Option buying research"
+      }
     ],
     "more": [
-      { "label": "Markets", "href": "#market" },
-      { "label": "Philosophy", "href": "#philosophy" },
-      { "label": "Approach", "href": "#strategy" },
-      { "label": "Credentials", "href": "#edge" },
-      { "label": "Testimonials", "href": "#testimonials" },
-      { "label": "Contact", "href": "#contact" }
+      {
+        "label": "Markets",
+        "href": "#market"
+      },
+      {
+        "label": "Philosophy",
+        "href": "#philosophy"
+      },
+      {
+        "label": "Approach",
+        "href": "#strategy"
+      },
+      {
+        "label": "Credentials",
+        "href": "#edge"
+      },
+      {
+        "label": "Testimonials",
+        "href": "#testimonials"
+      },
+      {
+        "label": "Contact",
+        "href": "#contact"
+      }
     ],
     "moreLabel": "More",
     "connectLabel": "Connect"
@@ -39,11 +73,36 @@
     "secondaryButton": "Connect with us",
     "tickerLabel": "ILLUSTRATIVE · NOT LIVE",
     "ticker": [
-      { "name": "NIFTY 50", "value": "22,418.60", "change": "+0.64%", "up": true },
-      { "name": "SENSEX", "value": "73,872.29", "change": "+0.51%", "up": true },
-      { "name": "BANK NIFTY", "value": "47,315.20", "change": "−0.28%", "up": false },
-      { "name": "INDIA VIX", "value": "13.42", "change": "−1.12%", "up": false },
-      { "name": "USD / INR", "value": "83.21", "change": "+0.04%", "up": true }
+      {
+        "name": "NIFTY 50",
+        "value": "22,418.60",
+        "change": "+0.64%",
+        "up": true
+      },
+      {
+        "name": "SENSEX",
+        "value": "73,872.20",
+        "change": "+0.51%",
+        "up": true
+      },
+      {
+        "name": "BANK NIFTY",
+        "value": "47,315.20",
+        "change": "−0.28%",
+        "up": false
+      },
+      {
+        "name": "INDIA VIX",
+        "value": "13.40",
+        "change": "−1.12%",
+        "up": false
+      },
+      {
+        "name": "USD / INR",
+        "value": "83.20",
+        "change": "+0.04%",
+        "up": true
+      }
     ]
   },
   "market": {
@@ -293,16 +352,40 @@
   "footer": {
     "location": "NEW DELHI, INDIA",
     "siteLinks": [
-      { "label": "About", "href": "#philosophy" },
-      { "label": "Our approach", "href": "#strategy" },
-      { "label": "Credentials & disclosures", "href": "#edge" },
-      { "label": "Testimonials", "href": "#testimonials" },
-      { "label": "Contact", "href": "#contact" }
+      {
+        "label": "About",
+        "href": "#philosophy"
+      },
+      {
+        "label": "Our approach",
+        "href": "#strategy"
+      },
+      {
+        "label": "Credentials & disclosures",
+        "href": "#edge"
+      },
+      {
+        "label": "Testimonials",
+        "href": "#testimonials"
+      },
+      {
+        "label": "Contact",
+        "href": "#contact"
+      }
     ],
     "legalLinks": [
-      { "label": "Privacy policy", "href": "/privacy" },
-      { "label": "Terms & conditions", "href": "/terms" },
-      { "label": "Regulatory & risk disclosures", "href": "#edge" }
+      {
+        "label": "Privacy policy",
+        "href": "/privacy"
+      },
+      {
+        "label": "Terms & conditions",
+        "href": "/terms"
+      },
+      {
+        "label": "Regulatory & risk disclosures",
+        "href": "#edge"
+      }
     ],
     "linkedinUrl": "https://www.linkedin.com/",
     "statementTitle": "TRADING MONKS",
