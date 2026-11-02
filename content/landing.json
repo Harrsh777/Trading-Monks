@@ -1,0 +1,313 @@
+{
+  "seo": {
+    "title": "TRADING MONKS | SEBI Registered Research Analyst - INH000025027",
+    "description": "Trading Monks is a research-driven equity platform led by Manas Budhiraja, SEBI Registered Research Analyst (INH000025027), focused on price action analysis, volume patterns, and disciplined risk management."
+  },
+  "contact": {
+    "email": "budhirajamanas23@gmail.com",
+    "phone": "9871861054",
+    "address": "B Block, East of Kailash, New Delhi - 110065",
+    "name": "Manas Budhiraja",
+    "registration": "INH000025027",
+    "validity": "16th February, 2026 - 15th February, 2031"
+  },
+  "nav": {
+    "primary": [
+      { "label": "RA Compliance", "href": "#edge", "inquiry": "" },
+      { "label": "Equity Swing Trading Research", "href": "#contact", "inquiry": "Equity swing trading research" },
+      { "label": "Option Selling Research", "href": "#contact", "inquiry": "Option selling research" },
+      { "label": "Option Buying", "href": "#contact", "inquiry": "Option buying research" }
+    ],
+    "more": [
+      { "label": "Markets", "href": "#market" },
+      { "label": "Philosophy", "href": "#philosophy" },
+      { "label": "Approach", "href": "#strategy" },
+      { "label": "Credentials", "href": "#edge" },
+      { "label": "Testimonials", "href": "#testimonials" },
+      { "label": "Contact", "href": "#contact" }
+    ],
+    "moreLabel": "More",
+    "connectLabel": "Connect"
+  },
+  "hero": {
+    "topLine": "SEBI REGISTERED RESEARCH ANALYST",
+    "titleLine1": "The market",
+    "titleLine2": "doesn't reward",
+    "titleHighlight": "the impulsive.",
+    "support": "Precision-driven thinking. Disciplined execution. A different perspective on the markets.",
+    "primaryButton": "Explore our approach",
+    "secondaryButton": "Connect with us",
+    "tickerLabel": "ILLUSTRATIVE · NOT LIVE",
+    "ticker": [
+      { "name": "NIFTY 50", "value": "22,418.60", "change": "+0.64%", "up": true },
+      { "name": "SENSEX", "value": "73,872.29", "change": "+0.51%", "up": true },
+      { "name": "BANK NIFTY", "value": "47,315.20", "change": "−0.28%", "up": false },
+      { "name": "INDIA VIX", "value": "13.42", "change": "−1.12%", "up": false },
+      { "name": "USD / INR", "value": "83.21", "change": "+0.04%", "up": true }
+    ]
+  },
+  "market": {
+    "eyebrow": "02 / THE MARKET IS ALIVE",
+    "title": "Chaos is visible.",
+    "titleHighlight": "Opportunity requires clarity.",
+    "intro": "Trading Monks is an independent equity research practice led by **Manas Budhiraja**. We connect price structure, volume participation and business fundamentals into structured research views — each with its risk parameters defined from the start.",
+    "badge": "ILLUSTRATIVE VISUALISATION · NOT LIVE",
+    "concepts": [
+      {
+        "index": "01",
+        "name": "Market structure",
+        "text": "Price behaviour at support, resistance and consolidation zones — read before any view is formed."
+      },
+      {
+        "index": "02",
+        "name": "Research discipline",
+        "text": "Technical structure is checked against volume participation, business quality and the wider market environment."
+      },
+      {
+        "index": "03",
+        "name": "Risk awareness",
+        "text": "Invalidation levels and exposure boundaries are defined before an opportunity is pursued."
+      }
+    ]
+  },
+  "philosophy": {
+    "eyebrow": "03 / THE MONK'S PHILOSOPHY",
+    "tagline": "CALM IS A COMPETITIVE ADVANTAGE",
+    "titleWord1": "Discipline",
+    "titleWord2": "over",
+    "titleWord3": "Impulse.",
+    "copy": "Markets move. Emotions fluctuate. Our philosophy begins with a commitment to process, research and disciplined decision-making.",
+    "principles": [
+      {
+        "number": "01",
+        "tag": "STRUCTURAL EDGE",
+        "title": "Research",
+        "text": "Decisions informed by price geometry and volume participation, never speculative market noise."
+      },
+      {
+        "number": "02",
+        "tag": "SYSTEMATIC CALM",
+        "title": "Discipline",
+        "text": "A non-negotiable process that neutralises greed and fear, ensuring consistency across market cycles."
+      },
+      {
+        "number": "03",
+        "tag": "CAPITAL PRESERVATION",
+        "title": "Risk Awareness",
+        "text": "Invalidation boundaries and asymmetric payoff profiles defined explicitly before capital is committed."
+      }
+    ]
+  },
+  "strategy": {
+    "eyebrow": "04 / INSIDE THE STRATEGY",
+    "title": "One system.",
+    "titleHighlight": "Five deliberate stages.",
+    "intro": "Research is not a feeling. It is a sequence — each stage with its own inputs, checks and stated limits.",
+    "scrollCue": "Scroll to run the system",
+    "panelTicker": "NIFTY 50 · 1D",
+    "panelBadge": "ILLUSTRATIVE · NOT LIVE",
+    "stages": [
+      {
+        "number": "01",
+        "name": "Observe",
+        "label": "PRICE / LEVELS / CONTEXT",
+        "title": "First, remove the noise.",
+        "text": "Read price behaviour at support, resistance and consolidation zones. Map the structure before forming a view.",
+        "signal": "KEY ZONES IDENTIFIED"
+      },
+      {
+        "number": "02",
+        "name": "Validate",
+        "label": "VOLUME / TREND / FUNDAMENTALS",
+        "title": "Conviction needs evidence.",
+        "text": "Study volume participation, trend strength, earnings and balance-sheet quality, and the broader market environment.",
+        "signal": "INSTITUTIONAL ACCUMULATION"
+      },
+      {
+        "number": "03",
+        "name": "Structure",
+        "label": "ENTRY / INVALIDATION / PARAMETERS",
+        "title": "Define the downside first.",
+        "text": "Set out entry zones, invalidation levels and research parameters. A perspective is incomplete without them.",
+        "signal": "R:R 3.4 : 1 ASYMMETRY"
+      },
+      {
+        "number": "04",
+        "name": "Define risk",
+        "label": "EXPOSURE / VOLATILITY / EVENTS",
+        "title": "Boundaries before conviction.",
+        "text": "Downside exposure, volatility, liquidity and event risk are stated explicitly in every research view.",
+        "signal": "EVENT RISK MAPPED"
+      },
+      {
+        "number": "05",
+        "name": "Review",
+        "label": "MONITOR / REASSESS / DISCLOSE",
+        "title": "A view is never final.",
+        "text": "Published perspectives are monitored against their stated parameters and reassessed when the structure changes.",
+        "signal": "STRUCTURE INTEGRITY"
+      }
+    ],
+    "finePrint": "Trading Monks provides independent equity research under SEBI Research Analyst registration. It does not execute trades or manage client capital. Chart is illustrative and does not represent a past or future recommendation."
+  },
+  "governance": {
+    "eyebrow": "05 / GOVERNANCE & RESEARCH INTEGRITY",
+    "chip": "SEBI REGISTERED",
+    "titleLine1": "Trust isn't a",
+    "titleLine2": "visual effect.",
+    "titleHighlight": "It's earned.",
+    "copy": "We don't publish a decorative performance curve, because a retrospective chart is a promise no analyst can make. What we can show is who is behind the research, how it is regulated, and how every view is structured.",
+    "stats": [
+      {
+        "value": 10,
+        "suffix": "+",
+        "tag": "EXPERIENCE",
+        "title": "Years of market analysis",
+        "text": "Market behaviour, price dynamics, institutional volume and structural cycles."
+      },
+      {
+        "value": 3,
+        "suffix": "",
+        "tag": "METHODOLOGY",
+        "title": "Integrated research lenses",
+        "text": "Technical structure, business fundamentals and explicit risk boundaries."
+      },
+      {
+        "value": 5,
+        "suffix": "",
+        "tag": "REGULATORY",
+        "title": "Year registration validity",
+        "text": "Granted by SEBI through 15 February 2031 under the RA Regulations."
+      }
+    ],
+    "verifyLink": "Verify on the SEBI official portal",
+    "verifyUrl": "https://www.sebi.gov.in/",
+    "sealValidText": "VALID THROUGH 15 · 02 · 2031",
+    "sealLocation": "NEW DELHI · INDIA",
+    "certEyebrow": "OFFICIAL REGISTRATION DOSSIER",
+    "certTitle": "SEBI Registered Research Analyst",
+    "certStatus": "ACTIVE · INDIVIDUAL",
+    "registrationCategory": "Individual Research Analyst",
+    "sebiHeadOffice": "SEBI Bhavan, Plot No. C4-A, 'G' Block, BKC, Bandra (E), Mumbai – 400 051",
+    "certFootnote": "Registration details can be independently verified with SEBI.",
+    "certButton": "Verify credential",
+    "capabilitiesEyebrow": "CAPABILITIES",
+    "capabilitiesTitle": "Three-tier research framework",
+    "lenses": [
+      {
+        "name": "TECHNICAL",
+        "title": "Technical Structure",
+        "text": "Support, resistance, consolidation, trend strength, breakout geometry, momentum and volume delta."
+      },
+      {
+        "name": "FUNDAMENTAL",
+        "title": "Business Fundamentals",
+        "text": "Earnings trajectory, revenue quality, balance-sheet strength, governance and competitive position."
+      },
+      {
+        "name": "RISK",
+        "title": "Risk Controls",
+        "text": "Downside exposure, invalidation levels, volatility parameters, liquidity and event risk stated upfront."
+      }
+    ],
+    "disclosuresEyebrow": "STATUTORY",
+    "disclosuresTitle": "Regulatory & risk disclosures",
+    "disclosures": [
+      {
+        "title": "Market Risk Disclosure",
+        "text": "Investments in securities market are subject to market risks. Read all the related documents carefully before investing. Registration does not assure returns."
+      },
+      {
+        "title": "Registration & Performance Notice",
+        "text": "Registration granted by SEBI and certification from NISM in no way guarantee performance of the research analyst or provide any assurance of returns to investors."
+      },
+      {
+        "title": "Informational & Research Standard",
+        "text": "This platform is dedicated strictly to independent equity research and education. Charts and values are illustrative models, not portfolio management or guaranteed trade execution."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Trusted by Serious Market Participants",
+    "description": "Disciplined investors, prop traders, and allocators rely on Trading Monks for objective structural equity research.",
+    "items": [
+      {
+        "name": "Rajeshwar Rao",
+        "handle": "HNI Equity Investor · Mumbai",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
+        "text": "Trading Monks replaced noisy tipsters with institutional-grade structural mapping. The invalidation levels and risk-reward clarity give our portfolio true tranquility."
+      },
+      {
+        "name": "Ananya Deshmukh",
+        "handle": "Prop Desk Trader · Bengaluru",
+        "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150",
+        "text": "Manas’s asymmetric setup framework is world-class. It is rare to see a SEBI RA who puts strict invalidation boundaries ahead of hype. Outstanding discipline."
+      },
+      {
+        "name": "Vikram Singhania",
+        "handle": "Derivatives Strategist · Delhi NCR",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
+        "text": "The combination of price structure, volume participation, and risk governance is pure precision. My win-loss asymmetry increased significantly within 3 months."
+      },
+      {
+        "name": "Siddharth Nair",
+        "handle": "Portfolio Allocator · Hyderabad",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150",
+        "text": "Clean, unbiased, and completely devoid of greed or panic. The research dossier is the only report I read before market open every morning."
+      },
+      {
+        "name": "Kavita Ramachandran",
+        "handle": "Fund Analyst · Chennai",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
+        "text": "The three-tier framework filtering technical geometry through fundamental balance sheets is exceptional. High signal-to-noise ratio in Indian equities."
+      }
+    ]
+  },
+  "contactSection": {
+    "eyebrow": "06 / THE INVITATION",
+    "title": "Get In touch",
+    "titleHighlight": "with us!",
+    "description": "Have questions or ideas? We'd love to hear from you. Reach out anytime and let's connect.",
+    "ctaButton": "Contact Us",
+    "emailLabel": "DIRECT EMAIL",
+    "phoneLabel": "PHONE",
+    "addressLabel": "HEADQUARTERS",
+    "formEyebrow": "PRIVATE INQUIRY",
+    "formTitle": "Contact Us",
+    "submitLabel": "Submit",
+    "formMicro": "No trade advice via this form",
+    "successTitle": "Thank you.",
+    "successText": "Your message has been received. We will reply as soon as possible.",
+    "successButton": "Send another message",
+    "inquiryTypes": [
+      "Research inquiry",
+      "Equity swing trading research",
+      "Option selling research",
+      "Option buying research",
+      "Professional dialogue",
+      "Collaboration",
+      "Media",
+      "Other"
+    ]
+  },
+  "footer": {
+    "location": "NEW DELHI, INDIA",
+    "siteLinks": [
+      { "label": "About", "href": "#philosophy" },
+      { "label": "Our approach", "href": "#strategy" },
+      { "label": "Credentials & disclosures", "href": "#edge" },
+      { "label": "Testimonials", "href": "#testimonials" },
+      { "label": "Contact", "href": "#contact" }
+    ],
+    "legalLinks": [
+      { "label": "Privacy policy", "href": "/privacy" },
+      { "label": "Terms & conditions", "href": "/terms" },
+      { "label": "Regulatory & risk disclosures", "href": "#edge" }
+    ],
+    "linkedinUrl": "https://www.linkedin.com/",
+    "statementTitle": "TRADING MONKS",
+    "statement": "Discipline in process. Clarity in decision-making.",
+    "copyright": "Trading Monks. All rights reserved.",
+    "risk": "Investments in securities market are subject to market risks. Read all the related documents carefully before investing. Registration granted by SEBI and certification from NISM in no way guarantee performance of the research analyst or provide any assurance of returns to investors."
+  }
+}
