@@ -1,5 +1,6 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 
 const COOKIE = "tm_admin";
 const SESSION_SECONDS = 60 * 60 * 8;
@@ -27,6 +28,7 @@ export function checkPassword(password: string) {
 }
 
 export async function createSession() {
+  await connection();
   const expires = String(Date.now() + SESSION_SECONDS * 1000);
   (await cookies()).set(COOKIE, `${expires}.${sign(expires)}`, {
     httpOnly: true,
@@ -44,6 +46,8 @@ export async function destroySession() {
 export async function isAdmin() {
   const token = (await cookies()).get(COOKIE)?.value;
   if (!token) return false;
+  /* Session expiry compares against the clock, so this must wait for a real request */
+  await connection();
   const [expires, signature] = token.split(".");
   if (!expires || !signature || Number(expires) < Date.now()) return false;
   try {
