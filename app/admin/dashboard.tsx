@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition, type ReactNode } from "react";
+import { Fragment, useEffect, useState, useTransition, type ReactNode } from "react";
 import type { LandingContent } from "@/lib/content";
 import { logout, saveContent } from "./actions";
 import { SECTIONS, type Block, type Field } from "./sections";
@@ -95,18 +95,22 @@ export default function Dashboard({
           <small>Content admin</small>
         </div>
         <nav className="adm-nav" aria-label="Sections">
-          {SECTIONS.map((s) => (
-            <button
-              type="button"
-              key={s.id}
-              className={s.id === active ? "is-active" : ""}
-              onClick={() => {
-                setActive(s.id);
-                window.scrollTo({ top: 0 });
-              }}
-            >
-              {s.title}
-            </button>
+          {SECTIONS.map((s, i) => (
+            <Fragment key={s.id}>
+              {(i === 0 || s.group !== SECTIONS[i - 1].group) && (
+                <span className="adm-nav-group">{s.group ?? "Landing page"}</span>
+              )}
+              <button
+                type="button"
+                className={s.id === active ? "is-active" : ""}
+                onClick={() => {
+                  setActive(s.id);
+                  window.scrollTo({ top: 0 });
+                }}
+              >
+                {s.title}
+              </button>
+            </Fragment>
           ))}
         </nav>
         <div className="adm-sidebar-foot">
@@ -123,7 +127,17 @@ export default function Dashboard({
         <header className="adm-topbar">
           <div>
             <h1>{section.title}</h1>
-            <p>{section.description}</p>
+            <p>
+              {section.description}
+              {section.url && (
+                <>
+                  {" "}
+                  <a href={section.url} target="_blank" rel="noopener noreferrer" className="adm-link">
+                    Open page ↗
+                  </a>
+                </>
+              )}
+            </p>
           </div>
           <div className="adm-actions">
             {dirty && <span className="adm-dirty">Unsaved changes</span>}

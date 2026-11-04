@@ -1,4 +1,5 @@
 import defaults from "@/content/landing.json";
+import { SERVICE_ROUTES } from "@/lib/services";
 
 /* Every editable string on the landing page. The JSON file is the schema. */
 export type LandingContent = typeof defaults;
@@ -30,7 +31,29 @@ const MAX_LIST = 60;
  * version of the schema.
  */
 export function sanitizeContent(input: unknown): LandingContent {
-  return coerce(input, DEFAULT_CONTENT, "") as LandingContent;
+  return linkServicePages(coerce(input, DEFAULT_CONTENT, "") as LandingContent);
+}
+
+/*
+ * Content saved before the service pages existed points the service menu
+ * links at in-page anchors (#contact, #edge). Any menu link named after a
+ * service that still points at an anchor is sent to that service's page.
+ */
+function linkServicePages(content: LandingContent): LandingContent {
+  const pages = new Map<string, string>();
+  for (const { slug, key } of SERVICE_ROUTES) {
+    const url = `/services/${slug}`;
+    pages.set(content.services[key].navLabel.trim().toLowerCase(), url);
+    pages.set(DEFAULT_CONTENT.services[key].navLabel.trim().toLowerCase(), url);
+  }
+  const fix = <T extends { label: string; href: string }>(link: T): T => {
+    const url = pages.get(link.label.trim().toLowerCase());
+    return url && (link.href.startsWith("#") || !link.href) ? { ...link, href: url } : link;
+  };
+  return {
+    ...content,
+    nav: { ...content.nav, primary: content.nav.primary.map(fix), more: content.nav.more.map(fix) },
+  };
 }
 
 function coerce(value: unknown, template: unknown, path: string): unknown {

@@ -15,26 +15,30 @@
     "primary": [
       {
         "label": "RA Compliance",
-        "href": "#edge",
+        "href": "/services/ra-compliance",
         "inquiry": ""
       },
       {
         "label": "Equity Swing Trading Research",
-        "href": "#contact",
-        "inquiry": "Equity swing trading research"
+        "href": "/services/equity-swing-trading",
+        "inquiry": ""
       },
       {
         "label": "Option Selling Research",
-        "href": "#contact",
-        "inquiry": "Option selling research"
+        "href": "/services/option-selling",
+        "inquiry": ""
       },
       {
         "label": "Option Buying",
-        "href": "#contact",
-        "inquiry": "Option buying research"
+        "href": "/services/option-buying",
+        "inquiry": ""
       }
     ],
     "more": [
+      {
+        "label": "All services",
+        "href": "/services"
+      },
       {
         "label": "Markets",
         "href": "#market"
@@ -340,6 +344,7 @@
     "successButton": "Send another message",
     "inquiryTypes": [
       "Research inquiry",
+      "RA compliance support",
       "Equity swing trading research",
       "Option selling research",
       "Option buying research",
@@ -355,6 +360,10 @@
       {
         "label": "About",
         "href": "#philosophy"
+      },
+      {
+        "label": "Services",
+        "href": "/services"
       },
       {
         "label": "Our approach",
@@ -392,5 +401,753 @@
     "statement": "Discipline in process. Clarity in decision-making.",
     "copyright": "Trading Monks. All rights reserved.",
     "risk": "Investments in securities market are subject to market risks. Read all the related documents carefully before investing. Registration granted by SEBI and certification from NISM in no way guarantee performance of the research analyst or provide any assurance of returns to investors."
+  },
+  "services": {
+    "hub": {
+      "seoTitle": "Research Services | Trading Monks — SEBI RA INH000025027",
+      "seoDescription": "Equity swing trading research, option selling research, option buying research and RA compliance support from Trading Monks, a SEBI Registered Research Analyst.",
+      "eyebrow": "SERVICES · RESEARCH, NOT TIPS",
+      "title": "Four disciplines.",
+      "titleHighlight": "One research standard.",
+      "intro": "Every service follows the same framework — structure first, defined risk always, and full disclosure. Choose the research desk that fits **how you participate** in the market.",
+      "cardCta": "Explore service",
+      "priceLabel": "Starting from",
+      "compareEyebrow": "WHAT EVERY PLAN INCLUDES",
+      "compareTitle": "The non-negotiables",
+      "commitments": [
+        {
+          "title": "Defined risk on every view",
+          "text": "Entry zone, invalidation level and target logic are published together — never one without the others."
+        },
+        {
+          "title": "SEBI-compliant disclosures",
+          "text": "Conflicts, holdings and research methodology disclosed as required under the SEBI (Research Analysts) Regulations, 2014."
+        },
+        {
+          "title": "No profit sharing, no assured returns",
+          "text": "Fees are fixed and transparent. We never promise returns or accept a share of client profits."
+        },
+        {
+          "title": "Grievance redressal",
+          "text": "A documented grievance process with defined response timelines, plus access to SEBI SCORES and the ODR portal."
+        }
+      ]
+    },
+    "raCompliance": {
+      "navLabel": "RA Compliance",
+      "cardTag": "FOR RESEARCH ANALYSTS",
+      "summary": "Registration support, documentation, audits and ongoing compliance for SEBI Research Analysts.",
+      "inquiry": "RA compliance support",
+      "seoTitle": "RA Compliance Support | Trading Monks",
+      "seoDescription": "End-to-end SEBI Research Analyst compliance — registration assistance, policy documentation, annual audit preparation and ongoing regulatory support.",
+      "hero": {
+        "eyebrow": "SERVICE 01 · RA COMPLIANCE",
+        "title": "Compliance is the foundation.",
+        "titleHighlight": "Research is built on it.",
+        "intro": "Practical, regulation-first support for aspiring and registered **SEBI Research Analysts** — from registration through annual audits, built by a practitioner who operates under the same rules.",
+        "primaryButton": "View plans",
+        "secondaryButton": "Talk to us",
+        "note": "Support is advisory in nature. Final regulatory decisions rest with SEBI and BSE (RAASB)."
+      },
+      "stats": [
+        {
+          "value": "2014",
+          "label": "SEBI RA Regulations framework"
+        },
+        {
+          "value": "100%",
+          "label": "Documentation checklist coverage"
+        },
+        {
+          "value": "48h",
+          "label": "Typical query response time"
+        }
+      ],
+      "overview": {
+        "eyebrow": "WHY IT MATTERS",
+        "title": "The rulebook keeps evolving.",
+        "titleHighlight": "Your practice should keep pace.",
+        "text": "Amendments, circulars and RAASB requirements change what a compliant research practice looks like. We translate them into **checklists, templates and timelines** you can actually run your practice on."
+      },
+      "audience": [
+        {
+          "title": "Aspiring Research Analysts",
+          "text": "Professionals preparing for NISM certification and a first SEBI RA application."
+        },
+        {
+          "title": "Newly registered RAs",
+          "text": "Practices setting up policies, client agreements, disclosures and record keeping."
+        },
+        {
+          "title": "Established practices",
+          "text": "RAs who want a structured annual audit and an external pair of eyes on their compliance."
+        }
+      ],
+      "features": {
+        "eyebrow": "WHAT IS COVERED",
+        "title": "Everything a compliant practice needs",
+        "intro": "Each engagement is scoped to your stage — pick the pieces you need or the full stack.",
+        "items": [
+          {
+            "tag": "REGISTRATION",
+            "title": "Application assistance",
+            "text": "Eligibility review, document checklist and guidance on the SEBI intermediary portal application."
+          },
+          {
+            "tag": "POLICIES",
+            "title": "Policy & procedure manuals",
+            "text": "Conflict of interest, personal trading, research process and record-keeping policies drafted to your practice."
+          },
+          {
+            "tag": "CLIENTS",
+            "title": "Client onboarding kit",
+            "text": "Terms & conditions, MITC, risk profiling and KYC workflows aligned with current SEBI circulars."
+          },
+          {
+            "tag": "DISCLOSURES",
+            "title": "Website & report disclosures",
+            "text": "Mandatory disclosure review for your website, research reports and social media communication."
+          },
+          {
+            "tag": "AUDIT",
+            "title": "Annual compliance audit",
+            "text": "Pre-audit review, gap report and remediation plan ahead of the annual compliance audit deadline."
+          },
+          {
+            "tag": "ONGOING",
+            "title": "Regulatory updates",
+            "text": "Plain-language summaries of new circulars with what to change and by when."
+          }
+        ]
+      },
+      "process": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "From assessment to sign-off",
+        "steps": [
+          {
+            "step": "01",
+            "title": "Discovery call",
+            "text": "We understand your practice, stage and current documentation."
+          },
+          {
+            "step": "02",
+            "title": "Gap assessment",
+            "text": "A written report of what is missing, outdated or at risk."
+          },
+          {
+            "step": "03",
+            "title": "Documentation",
+            "text": "Templates and policies drafted and customised for you."
+          },
+          {
+            "step": "04",
+            "title": "Review & handover",
+            "text": "Walkthrough session, final documents and an ongoing compliance calendar."
+          }
+        ]
+      },
+      "pricing": {
+        "eyebrow": "PRICING",
+        "title": "Clear scope.",
+        "titleHighlight": "Fixed fees.",
+        "intro": "All fees are exclusive of GST. Custom engagements are quoted after the discovery call.",
+        "note": "Fees are payable only through banking channels. No cash payments are accepted."
+      },
+      "plans": [
+        {
+          "name": "Starter",
+          "badge": "",
+          "price": "₹14,999",
+          "period": "one-time",
+          "description": "For aspiring RAs preparing their application.",
+          "features": "Eligibility & document review\nApplication checklist\nOne 60-minute consultation\nEmail support for 30 days",
+          "ctaLabel": "Get started",
+          "highlighted": false
+        },
+        {
+          "name": "Practice",
+          "badge": "MOST CHOSEN",
+          "price": "₹39,999",
+          "period": "per year",
+          "description": "For newly registered RAs setting up operations.",
+          "features": "Everything in Starter\nFull policy & procedure manual\nClient onboarding kit (T&C, MITC, risk profile)\nWebsite disclosure review\nQuarterly compliance check-in",
+          "ctaLabel": "Choose Practice",
+          "highlighted": true
+        },
+        {
+          "name": "Audit Ready",
+          "badge": "",
+          "price": "₹24,999",
+          "period": "per audit",
+          "description": "For established practices before the annual audit.",
+          "features": "Pre-audit document review\nGap report with priorities\nRemediation support\nAudit-day readiness checklist",
+          "ctaLabel": "Book an audit",
+          "highlighted": false
+        }
+      ],
+      "faq": {
+        "eyebrow": "FAQ",
+        "title": "Common questions",
+        "items": [
+          {
+            "question": "Do you file the SEBI application on my behalf?",
+            "answer": "No. The application must be filed by you. We prepare the checklist, review documents and guide you through every step."
+          },
+          {
+            "question": "Is this a substitute for a compliance auditor?",
+            "answer": "No. We help you prepare; the annual compliance audit itself must be conducted by an eligible independent auditor as required."
+          },
+          {
+            "question": "Can I buy only one component?",
+            "answer": "Yes. Any feature can be scoped individually — mention it in your inquiry and we will quote it."
+          }
+        ]
+      },
+      "disclaimer": "Compliance support is advisory and does not guarantee approval of any application by SEBI or any other authority.",
+      "cta": {
+        "eyebrow": "START A CONVERSATION",
+        "title": "Build your practice",
+        "titleHighlight": "on solid ground.",
+        "text": "Tell us where you are in your RA journey and we will recommend the right scope.",
+        "button": "Send inquiry"
+      }
+    },
+    "swingTrading": {
+      "navLabel": "Equity Swing Trading Research",
+      "cardTag": "EQUITY · 2–8 WEEKS",
+      "summary": "Structured swing research on Indian equities, each view published with entry zone, invalidation and target logic.",
+      "inquiry": "Equity swing trading research",
+      "seoTitle": "Equity Swing Trading Research | Trading Monks",
+      "seoDescription": "SEBI-registered equity swing trading research combining price structure, volume participation and fundamentals, with defined risk on every view.",
+      "hero": {
+        "eyebrow": "SERVICE 02 · EQUITY SWING RESEARCH",
+        "title": "Patience, structured.",
+        "titleHighlight": "Swings with a reason.",
+        "intro": "Research views on NSE-listed equities for a **2 to 8 week** horizon — built where price structure, volume and business quality agree.",
+        "primaryButton": "View plans",
+        "secondaryButton": "Ask a question",
+        "note": "Research is for information and education. Investment in securities is subject to market risks."
+      },
+      "stats": [
+        {
+          "value": "2–8",
+          "label": "Week holding horizon"
+        },
+        {
+          "value": "4–8",
+          "label": "Research views per month"
+        },
+        {
+          "value": "1:2+",
+          "label": "Minimum reward-to-risk filter"
+        }
+      ],
+      "overview": {
+        "eyebrow": "THE APPROACH",
+        "title": "Not every move deserves a trade.",
+        "titleHighlight": "Only the structured ones do.",
+        "text": "We screen for stocks in **clear trend structure**, confirmed by volume, in businesses we would be comfortable holding. Each view carries its invalidation level from day one — so you always know where the thesis breaks."
+      },
+      "audience": [
+        {
+          "title": "Working professionals",
+          "text": "Participants who cannot watch screens all day and want positional, low-frequency research."
+        },
+        {
+          "title": "Investors adding tactics",
+          "text": "Long-term investors who want structured entries and exits around their core portfolio."
+        },
+        {
+          "title": "Disciplined self-traders",
+          "text": "Traders looking for a second, rules-based opinion before they commit capital."
+        }
+      ],
+      "features": {
+        "eyebrow": "WHAT YOU RECEIVE",
+        "title": "Research you can actually act on",
+        "intro": "Every view is delivered with the same complete structure — no vague calls, no hindsight edits.",
+        "items": [
+          {
+            "tag": "VIEWS",
+            "title": "Complete research notes",
+            "text": "Stock, rationale, entry zone, invalidation level, targets and expected horizon in one note."
+          },
+          {
+            "tag": "RISK",
+            "title": "Position-sizing guidance",
+            "text": "Suggested risk per view as a percentage of capital, adjusted to your risk profile."
+          },
+          {
+            "tag": "UPDATES",
+            "title": "Live follow-ups",
+            "text": "Trailing-stop revisions, partial booking notes and exit updates as structure evolves."
+          },
+          {
+            "tag": "WATCHLIST",
+            "title": "Weekly watchlist",
+            "text": "Stocks approaching setups, so you can prepare before a view is published."
+          },
+          {
+            "tag": "REVIEW",
+            "title": "Monthly performance log",
+            "text": "Every published view logged with outcome — wins and losses, unedited."
+          },
+          {
+            "tag": "LEARN",
+            "title": "Market structure primers",
+            "text": "Short write-ups on the concepts behind each setup so you learn the reasoning."
+          }
+        ]
+      },
+      "process": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "From onboarding to your first view",
+        "steps": [
+          {
+            "step": "01",
+            "title": "Risk profiling",
+            "text": "A short questionnaire and KYC, as required for every client."
+          },
+          {
+            "step": "02",
+            "title": "Agreement & payment",
+            "text": "Terms, MITC and fee payment through banking channels."
+          },
+          {
+            "step": "03",
+            "title": "Onboarding",
+            "text": "Access to the research channel and an orientation note."
+          },
+          {
+            "step": "04",
+            "title": "Research delivery",
+            "text": "Views and updates delivered as they are published."
+          }
+        ]
+      },
+      "pricing": {
+        "eyebrow": "PRICING",
+        "title": "Simple plans.",
+        "titleHighlight": "No hidden fees.",
+        "intro": "All fees are exclusive of GST and within the limits prescribed by SEBI for Research Analysts.",
+        "note": "Fees are not refundable on the basis of research performance. Please read the terms before subscribing."
+      },
+      "plans": [
+        {
+          "name": "Monthly",
+          "badge": "",
+          "price": "₹4,999",
+          "period": "per month",
+          "description": "Try the research process for a month.",
+          "features": "4–8 swing research views\nEntry, invalidation & targets\nLive follow-up updates\nWeekly watchlist",
+          "ctaLabel": "Subscribe monthly",
+          "highlighted": false
+        },
+        {
+          "name": "Quarterly",
+          "badge": "BEST VALUE",
+          "price": "₹12,999",
+          "period": "per quarter",
+          "description": "The full process across market cycles.",
+          "features": "Everything in Monthly\nPosition-sizing guidance\nMonthly performance log\nPriority query support",
+          "ctaLabel": "Subscribe quarterly",
+          "highlighted": true
+        },
+        {
+          "name": "Half-yearly",
+          "badge": "",
+          "price": "₹22,999",
+          "period": "per 6 months",
+          "description": "For committed, long-horizon participants.",
+          "features": "Everything in Quarterly\nMarket structure primers\nOne 1:1 review call per quarter",
+          "ctaLabel": "Subscribe half-yearly",
+          "highlighted": false
+        }
+      ],
+      "faq": {
+        "eyebrow": "FAQ",
+        "title": "Common questions",
+        "items": [
+          {
+            "question": "How much capital do I need?",
+            "answer": "There is no minimum, but views are designed for portfolios where risk per idea can be kept to 1–2% of capital."
+          },
+          {
+            "question": "Do you execute trades for me?",
+            "answer": "No. We provide research only. You decide whether to act and place every order yourself through your own broker."
+          },
+          {
+            "question": "How are views delivered?",
+            "answer": "Through a dedicated research channel and email, with each note time-stamped at publication."
+          }
+        ]
+      },
+      "disclaimer": "Past performance is not indicative of future results. Investment in securities market is subject to market risks; read all related documents carefully before investing.",
+      "cta": {
+        "eyebrow": "BEGIN WITH CLARITY",
+        "title": "Trade the structure,",
+        "titleHighlight": "not the noise.",
+        "text": "Have a question about the research process or the plans? Write to us.",
+        "button": "Send inquiry"
+      }
+    },
+    "optionSelling": {
+      "navLabel": "Option Selling Research",
+      "cardTag": "F&O · HEDGED STRATEGIES",
+      "summary": "Hedged, premium-collection research on index options with defined maximum loss on every structure.",
+      "inquiry": "Option selling research",
+      "seoTitle": "Option Selling Research | Trading Monks",
+      "seoDescription": "Hedged option selling research on NIFTY and BANK NIFTY — defined-risk structures, adjustment rules and margin planning from a SEBI Registered Research Analyst.",
+      "hero": {
+        "eyebrow": "SERVICE 03 · OPTION SELLING RESEARCH",
+        "title": "Time decays.",
+        "titleHighlight": "Discipline compounds.",
+        "intro": "Hedged premium-selling research on index options — every structure published with its **maximum loss defined** before entry.",
+        "primaryButton": "View plans",
+        "secondaryButton": "Ask a question",
+        "note": "Derivatives carry a high level of risk. Most individual F&O traders incur losses, as per SEBI studies."
+      },
+      "stats": [
+        {
+          "value": "100%",
+          "label": "Hedged structures — no naked selling"
+        },
+        {
+          "value": "Weekly",
+          "label": "Index expiry coverage"
+        },
+        {
+          "value": "Pre-set",
+          "label": "Adjustment & exit rules"
+        }
+      ],
+      "overview": {
+        "eyebrow": "THE APPROACH",
+        "title": "Selling options is a risk business.",
+        "titleHighlight": "We treat it like one.",
+        "text": "Our research focuses on **defined-risk spreads and hedged strangles** on liquid index options. Volatility regime, event calendar and open interest structure decide whether a structure is worth taking at all."
+      },
+      "audience": [
+        {
+          "title": "Experienced F&O participants",
+          "text": "Traders who understand margin, Greeks and expiry mechanics."
+        },
+        {
+          "title": "Capital-efficient traders",
+          "text": "Participants who want hedged structures with lower margin and capped downside."
+        },
+        {
+          "title": "Rules-based operators",
+          "text": "Those who prefer pre-defined adjustment and exit rules over discretionary decisions."
+        }
+      ],
+      "features": {
+        "eyebrow": "WHAT YOU RECEIVE",
+        "title": "Structures, not guesses",
+        "intro": "Each research note includes the complete position — legs, margin estimate, breakevens and exit plan.",
+        "items": [
+          {
+            "tag": "STRUCTURES",
+            "title": "Hedged strategy notes",
+            "text": "Iron condors, credit spreads and hedged strangles with every leg specified."
+          },
+          {
+            "tag": "RISK",
+            "title": "Maximum loss defined",
+            "text": "Breakevens, max loss and margin estimate published before entry."
+          },
+          {
+            "tag": "ADJUST",
+            "title": "Adjustment playbook",
+            "text": "Pre-defined rules for rolling, shifting or exiting when price tests a short strike."
+          },
+          {
+            "tag": "VOLATILITY",
+            "title": "IV regime filter",
+            "text": "India VIX and IV percentile context so you know when not to sell."
+          },
+          {
+            "tag": "EVENTS",
+            "title": "Event calendar",
+            "text": "RBI policy, budget, results and global events flagged ahead of time."
+          },
+          {
+            "tag": "REVIEW",
+            "title": "Expiry review",
+            "text": "Post-expiry breakdown of every structure, including losses."
+          }
+        ]
+      },
+      "process": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "Suitability first",
+        "steps": [
+          {
+            "step": "01",
+            "title": "Risk profiling",
+            "text": "Derivatives research is only offered where the risk profile is suitable."
+          },
+          {
+            "step": "02",
+            "title": "Agreement & payment",
+            "text": "Terms, MITC and fee payment through banking channels."
+          },
+          {
+            "step": "03",
+            "title": "Orientation",
+            "text": "A primer on our structures, margin and adjustment rules."
+          },
+          {
+            "step": "04",
+            "title": "Research delivery",
+            "text": "Pre-market structure notes and intraday adjustment updates."
+          }
+        ]
+      },
+      "pricing": {
+        "eyebrow": "PRICING",
+        "title": "Transparent plans.",
+        "titleHighlight": "Defined like our risk.",
+        "intro": "All fees are exclusive of GST and within the limits prescribed by SEBI for Research Analysts.",
+        "note": "Option selling requires substantial margin. Fees do not include brokerage, taxes or margin requirements."
+      },
+      "plans": [
+        {
+          "name": "Monthly",
+          "badge": "",
+          "price": "₹6,999",
+          "period": "per month",
+          "description": "Weekly expiry structures for one month.",
+          "features": "Hedged NIFTY structures\nMax loss & breakevens per note\nAdjustment updates\nEvent calendar",
+          "ctaLabel": "Subscribe monthly",
+          "highlighted": false
+        },
+        {
+          "name": "Quarterly",
+          "badge": "MOST CHOSEN",
+          "price": "₹17,999",
+          "period": "per quarter",
+          "description": "Full coverage across volatility regimes.",
+          "features": "Everything in Monthly\nBANK NIFTY & FINNIFTY coverage\nIV regime filter\nExpiry review reports",
+          "ctaLabel": "Subscribe quarterly",
+          "highlighted": true
+        },
+        {
+          "name": "Half-yearly",
+          "badge": "",
+          "price": "₹32,999",
+          "period": "per 6 months",
+          "description": "For serious, process-driven sellers.",
+          "features": "Everything in Quarterly\nAdjustment playbook PDF\nOne 1:1 review call per month",
+          "ctaLabel": "Subscribe half-yearly",
+          "highlighted": false
+        }
+      ],
+      "faq": {
+        "eyebrow": "FAQ",
+        "title": "Common questions",
+        "items": [
+          {
+            "question": "What capital is required?",
+            "answer": "Hedged index structures need the margin your broker specifies, which varies with the structure. Check with your broker before subscribing."
+          },
+          {
+            "question": "Do you recommend naked option selling?",
+            "answer": "No. Every structure we publish is hedged so that the maximum loss is known in advance."
+          },
+          {
+            "question": "What if I miss an adjustment update?",
+            "answer": "Each structure has a pre-defined stop at the structure level, so a missed update does not leave risk undefined."
+          }
+        ]
+      },
+      "disclaimer": "Trading in derivatives involves substantial risk of loss. As per SEBI's study, 9 out of 10 individual traders in equity F&O incurred net losses. Research does not guarantee profit.",
+      "cta": {
+        "eyebrow": "ASK FIRST",
+        "title": "Understand the risk",
+        "titleHighlight": "before the premium.",
+        "text": "Not sure option selling suits your profile? Tell us about your experience and we will be honest.",
+        "button": "Send inquiry"
+      }
+    },
+    "optionBuying": {
+      "navLabel": "Option Buying",
+      "cardTag": "F&O · DIRECTIONAL",
+      "summary": "Selective, directional option buying research with strict premium-at-risk limits and time-based exits.",
+      "inquiry": "Option buying research",
+      "seoTitle": "Option Buying Research | Trading Monks",
+      "seoDescription": "Selective directional option buying research on index and stock options, with premium-at-risk limits, time stops and structured exits.",
+      "hero": {
+        "eyebrow": "SERVICE 04 · OPTION BUYING RESEARCH",
+        "title": "Fewer trades.",
+        "titleHighlight": "Sharper conviction.",
+        "intro": "Directional option buying research only when **momentum, structure and volatility** line up — with the premium at risk capped before entry.",
+        "primaryButton": "View plans",
+        "secondaryButton": "Ask a question",
+        "note": "Option premiums can decay to zero. Only risk capital you can afford to lose."
+      },
+      "stats": [
+        {
+          "value": "2–4",
+          "label": "Selective setups per week"
+        },
+        {
+          "value": "Capped",
+          "label": "Premium at risk per view"
+        },
+        {
+          "value": "Time",
+          "label": "Stops alongside price stops"
+        }
+      ],
+      "overview": {
+        "eyebrow": "THE APPROACH",
+        "title": "Buying options is about timing.",
+        "titleHighlight": "And knowing when to wait.",
+        "text": "Option buyers fight time decay on every trade. We only publish views when a **breakout or reversal is confirmed by volume** and implied volatility is reasonable — and we exit on time if the move does not come."
+      },
+      "audience": [
+        {
+          "title": "Small-capital participants",
+          "text": "Traders who prefer a fixed, known maximum loss — the premium paid."
+        },
+        {
+          "title": "Momentum traders",
+          "text": "Participants who want structured, event-aware directional setups."
+        },
+        {
+          "title": "Learners of option Greeks",
+          "text": "Traders who want to understand delta, theta and IV through real research notes."
+        }
+      ],
+      "features": {
+        "eyebrow": "WHAT YOU RECEIVE",
+        "title": "Selective by design",
+        "intro": "Quality over frequency — each note explains why now, why this strike and when to walk away.",
+        "items": [
+          {
+            "tag": "SETUPS",
+            "title": "Directional research notes",
+            "text": "Underlying, strike, expiry, entry range, stop and target in every note."
+          },
+          {
+            "tag": "STRIKES",
+            "title": "Strike selection logic",
+            "text": "Why a given strike and expiry — delta, liquidity and theta trade-offs explained."
+          },
+          {
+            "tag": "RISK",
+            "title": "Premium-at-risk caps",
+            "text": "Suggested maximum premium per view as a percentage of trading capital."
+          },
+          {
+            "tag": "TIME",
+            "title": "Time-based exits",
+            "text": "If the move does not happen within the window, the view is closed — no hoping."
+          },
+          {
+            "tag": "VOLATILITY",
+            "title": "IV awareness",
+            "text": "Avoids buying into expensive premium before events unless the setup demands it."
+          },
+          {
+            "tag": "REVIEW",
+            "title": "Weekly review",
+            "text": "Every view logged with outcome and lessons, published weekly."
+          }
+        ]
+      },
+      "process": {
+        "eyebrow": "HOW IT WORKS",
+        "title": "Simple onboarding",
+        "steps": [
+          {
+            "step": "01",
+            "title": "Risk profiling",
+            "text": "KYC and a risk-profile questionnaire for derivatives suitability."
+          },
+          {
+            "step": "02",
+            "title": "Agreement & payment",
+            "text": "Terms, MITC and fee payment through banking channels."
+          },
+          {
+            "step": "03",
+            "title": "Orientation",
+            "text": "A short guide to reading our notes and sizing premium."
+          },
+          {
+            "step": "04",
+            "title": "Research delivery",
+            "text": "Intraday and positional setups delivered in real time."
+          }
+        ]
+      },
+      "pricing": {
+        "eyebrow": "PRICING",
+        "title": "Pick your pace.",
+        "titleHighlight": "Keep your discipline.",
+        "intro": "All fees are exclusive of GST and within the limits prescribed by SEBI for Research Analysts.",
+        "note": "Fees do not include brokerage, taxes or the premium you pay for options."
+      },
+      "plans": [
+        {
+          "name": "Monthly",
+          "badge": "",
+          "price": "₹3,999",
+          "period": "per month",
+          "description": "Selective setups for one month.",
+          "features": "2–4 setups per week\nStrike & expiry logic\nStop, target & time exit\nWeekly review",
+          "ctaLabel": "Subscribe monthly",
+          "highlighted": false
+        },
+        {
+          "name": "Quarterly",
+          "badge": "BEST VALUE",
+          "price": "₹9,999",
+          "period": "per quarter",
+          "description": "Enough time to see the process work.",
+          "features": "Everything in Monthly\nStock option setups\nPremium-at-risk guidance\nPriority query support",
+          "ctaLabel": "Subscribe quarterly",
+          "highlighted": true
+        },
+        {
+          "name": "Half-yearly",
+          "badge": "",
+          "price": "₹17,999",
+          "period": "per 6 months",
+          "description": "For committed directional traders.",
+          "features": "Everything in Quarterly\nOption Greeks primer series\nOne 1:1 review call per quarter",
+          "ctaLabel": "Subscribe half-yearly",
+          "highlighted": false
+        }
+      ],
+      "faq": {
+        "eyebrow": "FAQ",
+        "title": "Common questions",
+        "items": [
+          {
+            "question": "Is option buying safer than selling?",
+            "answer": "The maximum loss is limited to the premium paid, but the probability of losing that premium is high. Neither is safe — size accordingly."
+          },
+          {
+            "question": "Are setups intraday or positional?",
+            "answer": "Both. Each note clearly states its expected holding window and time-based exit."
+          },
+          {
+            "question": "Can I follow with small capital?",
+            "answer": "Yes, but we recommend never risking more than a small percentage of your trading capital on any single premium."
+          }
+        ]
+      },
+      "disclaimer": "Trading in derivatives involves substantial risk of loss. As per SEBI's study, 9 out of 10 individual traders in equity F&O incurred net losses. Research does not guarantee profit.",
+      "cta": {
+        "eyebrow": "GET IN TOUCH",
+        "title": "Wait for the setup.",
+        "titleHighlight": "Then act with intent.",
+        "text": "Questions about the research, timing or plans? We reply personally.",
+        "button": "Send inquiry"
+      }
+    }
   }
 }

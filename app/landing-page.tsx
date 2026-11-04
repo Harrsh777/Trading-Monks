@@ -24,8 +24,8 @@ import "./page.css";
 /* -------------------------------------------------------------------------- */
 
 /* All copy comes from content/landing.json, edited through /admin */
-const ContentContext = createContext<LandingContent>(DEFAULT_CONTENT);
-const useContent = () => useContext(ContentContext);
+export const ContentContext = createContext<LandingContent>(DEFAULT_CONTENT);
+export const useContent = () => useContext(ContentContext);
 
 type NavItem = LandingContent["nav"]["primary"][number];
 
@@ -36,7 +36,7 @@ const LENS_ANGLES = [0, 120, 240];
 const STAGE_COUNT = 5;
 
 /* Renders **bold** markers in admin-written paragraphs */
-function Rich({ text }: { text: string }) {
+export function Rich({ text }: { text: string }) {
   return (
     <>
       {text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
@@ -54,7 +54,7 @@ function Rich({ text }: { text: string }) {
 /* Primitives                                                                 */
 /* -------------------------------------------------------------------------- */
 
-function Arrow({ diagonal = false }: { diagonal?: boolean }) {
+export function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
@@ -74,7 +74,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
  * Every path carries pathLength="1" so stroke-dashoffset can be animated 1 → 0
  * without measuring path lengths at runtime.
  */
-function Emblem({
+export function Emblem({
   className = "",
   metallic = false,
 }: {
@@ -170,9 +170,9 @@ function Emblem({
   );
 }
 
-function Brand() {
+export function Brand({ href = "#top" }: { href?: string }) {
   return (
-    <a href="#top" className="tm-brand" aria-label="Trading Monks — home">
+    <a href={href} className="tm-brand" aria-label="Trading Monks — home">
       <Emblem className="tm-brand-emblem" />
       <span>
         TRADING<span className="tm-brand-secondary">MONKS</span>
@@ -181,7 +181,7 @@ function Brand() {
   );
 }
 
-function Eyebrow({ children }: { children: ReactNode }) {
+export function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <div className="tm-eyebrow">
       <span aria-hidden="true" />
@@ -190,13 +190,13 @@ function Eyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-function CurrentYear() {
+export function CurrentYear() {
   const [year, setYear] = useState<number | string>(2026);
   useEffect(() => setYear(new Date().getFullYear()), []);
   return <>{year}</>;
 }
 
-function MagneticLink({
+export function MagneticLink({
   href,
   children,
   ghost = false,
@@ -1061,7 +1061,7 @@ function GovernanceSection() {
 
 type FormStatus = "idle" | "sending" | "sent" | "fallback";
 
-function ContactForm({
+export function ContactForm({
   inquiry,
   onInquiryChange,
 }: {

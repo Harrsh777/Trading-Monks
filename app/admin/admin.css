@@ -504,3 +504,23 @@ textarea.adm-input {
     grid-template-columns: 1fr;
   }
 }
+
+.adm-nav-group {
+  margin: 14px 12px 4px;
+  color: var(--adm-gold);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.adm-nav-group:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 860px) {
+  .adm-nav-group {
+    flex-basis: 100%;
+    margin: 8px 0 2px;
+  }
+}

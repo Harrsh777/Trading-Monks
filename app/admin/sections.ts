@@ -27,7 +27,16 @@ export type Block =
       hint?: string;
     };
 
-export type Section = { id: string; title: string; description: string; blocks: Block[] };
+export type Section = {
+  id: string;
+  title: string;
+  description: string;
+  blocks: Block[];
+  /* Sidebar heading this section is listed under */
+  group?: string;
+  /* Public page this section edits, linked from the admin top bar */
+  url?: string;
+};
 
 const BOLD_HINT = "Wrap words in **double asterisks** to make them bold.";
 
@@ -464,3 +473,251 @@ export const SECTIONS: Section[] = [
     ],
   },
 ];
+
+/* ---- Service pages ------------------------------------------------------ */
+
+const SERVICE_PAGES = [
+  { key: "raCompliance", title: "RA Compliance", url: "/services/ra-compliance" },
+  { key: "swingTrading", title: "Equity Swing Trading", url: "/services/equity-swing-trading" },
+  { key: "optionSelling", title: "Option Selling", url: "/services/option-selling" },
+  { key: "optionBuying", title: "Option Buying", url: "/services/option-buying" },
+];
+
+function serviceSection({ key, title, url }: (typeof SERVICE_PAGES)[number]): Section {
+  const p = `services.${key}`;
+  return {
+    id: `service-${key}`,
+    group: "Service pages",
+    title,
+    description: `Everything on ${url}: hero, features, process, pricing plans and FAQ.`,
+    url,
+    blocks: [
+      {
+        kind: "fields",
+        path: p,
+        title: "Card, menu & search engines",
+        fields: [
+          { key: "navLabel", label: "Service name", hint: "Shown on the services overview card and the \"Next service\" link." },
+          { key: "cardTag", label: "Card tag" },
+          { key: "summary", label: "Card summary", type: "textarea" },
+          { key: "inquiry", label: "Contact form inquiry type", hint: "Preselected in the form on this page." },
+          { key: "seoTitle", label: "Page title" },
+          { key: "seoDescription", label: "Meta description", type: "textarea" },
+        ],
+      },
+      {
+        kind: "fields",
+        path: `${p}.hero`,
+        title: "Hero",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Headline" },
+          { key: "titleHighlight", label: "Headline — gold line" },
+          { key: "intro", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+          { key: "primaryButton", label: "Primary button (jumps to pricing)" },
+          { key: "secondaryButton", label: "Secondary button (jumps to contact)" },
+          { key: "note", label: "Small note under the buttons", type: "textarea" },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.stats`,
+        title: "Hero highlights",
+        itemName: "highlight",
+        summaryKey: "value",
+        fields: [
+          { key: "value", label: "Value" },
+          { key: "label", label: "Label" },
+        ],
+        newItem: { value: "—", label: "New highlight" },
+      },
+      {
+        kind: "fields",
+        path: `${p}.overview`,
+        title: "Overview",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+          { key: "titleHighlight", label: "Heading — gold line" },
+          { key: "text", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.audience`,
+        title: "Who it is for",
+        itemName: "audience",
+        summaryKey: "title",
+        fields: [
+          { key: "title", label: "Title" },
+          { key: "text", label: "Text", type: "textarea" },
+        ],
+        newItem: { title: "New audience", text: "" },
+      },
+      {
+        kind: "fields",
+        path: `${p}.features`,
+        title: "Features — heading",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+          { key: "intro", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.features.items`,
+        title: "Features",
+        itemName: "feature",
+        summaryKey: "title",
+        fields: [
+          { key: "tag", label: "Tag" },
+          { key: "title", label: "Title" },
+          { key: "text", label: "Text", type: "textarea" },
+        ],
+        newItem: { tag: "NEW", title: "New feature", text: "" },
+      },
+      {
+        kind: "fields",
+        path: `${p}.process`,
+        title: "Process — heading",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.process.steps`,
+        title: "Process steps",
+        itemName: "step",
+        summaryKey: "title",
+        fields: [
+          { key: "step", label: "Number" },
+          { key: "title", label: "Title" },
+          { key: "text", label: "Text", type: "textarea" },
+        ],
+        newItem: { step: "05", title: "New step", text: "" },
+      },
+      {
+        kind: "fields",
+        path: `${p}.pricing`,
+        title: "Pricing — heading",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+          { key: "titleHighlight", label: "Heading — gold line" },
+          { key: "intro", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+          { key: "note", label: "Fine print under the plans", type: "textarea" },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.plans`,
+        title: "Pricing plans",
+        itemName: "plan",
+        summaryKey: "name",
+        hint: "The first plan's price is shown as \"Starting from\" on the services overview page.",
+        fields: [
+          { key: "name", label: "Plan name" },
+          { key: "badge", label: "Badge", hint: "Optional, e.g. MOST CHOSEN." },
+          { key: "price", label: "Price", hint: "Written as shown, e.g. ₹4,999." },
+          { key: "period", label: "Billing period", hint: "e.g. per month, one-time." },
+          { key: "description", label: "Short description", type: "textarea" },
+          { key: "features", label: "Included features", type: "textarea", hint: "One feature per line." },
+          { key: "ctaLabel", label: "Button label" },
+          { key: "highlighted", label: "Highlight this plan (gold card)", type: "boolean" },
+        ],
+        newItem: {
+          name: "New plan",
+          badge: "",
+          price: "₹0",
+          period: "per month",
+          description: "",
+          features: "Feature one\nFeature two",
+          ctaLabel: "Get started",
+          highlighted: false,
+        },
+      },
+      {
+        kind: "fields",
+        path: `${p}.faq`,
+        title: "FAQ — heading",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+        ],
+      },
+      {
+        kind: "list",
+        path: `${p}.faq.items`,
+        title: "Questions",
+        itemName: "question",
+        summaryKey: "question",
+        fields: [
+          { key: "question", label: "Question" },
+          { key: "answer", label: "Answer", type: "textarea", hint: BOLD_HINT },
+        ],
+        newItem: { question: "New question?", answer: "" },
+      },
+      {
+        kind: "fields",
+        path: p,
+        title: "Risk disclosure",
+        fields: [{ key: "disclaimer", label: "Disclosure text", type: "textarea", hint: BOLD_HINT }],
+      },
+      {
+        kind: "fields",
+        path: `${p}.cta`,
+        title: "Contact section",
+        fields: [
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Heading" },
+          { key: "titleHighlight", label: "Heading — gold line" },
+          { key: "text", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+        ],
+      },
+    ],
+  };
+}
+
+SECTIONS.push(
+  {
+    id: "services-hub",
+    group: "Service pages",
+    title: "Services overview",
+    description: "The /services page. Cards pull their name, tag, summary and starting price from each service.",
+    url: "/services",
+    blocks: [
+      {
+        kind: "fields",
+        path: "services.hub",
+        fields: [
+          { key: "seoTitle", label: "Page title" },
+          { key: "seoDescription", label: "Meta description", type: "textarea" },
+          { key: "eyebrow", label: "Eyebrow" },
+          { key: "title", label: "Headline" },
+          { key: "titleHighlight", label: "Headline — gold line" },
+          { key: "intro", label: "Paragraph", type: "textarea", hint: BOLD_HINT },
+          { key: "cardCta", label: "Card link text" },
+          { key: "priceLabel", label: "Price label (e.g. Starting from)" },
+          { key: "compareEyebrow", label: "Commitments — eyebrow" },
+          { key: "compareTitle", label: "Commitments — heading" },
+        ],
+      },
+      {
+        kind: "list",
+        path: "services.hub.commitments",
+        title: "Commitments",
+        itemName: "commitment",
+        summaryKey: "title",
+        fields: [
+          { key: "title", label: "Title" },
+          { key: "text", label: "Text", type: "textarea" },
+        ],
+        newItem: { title: "New commitment", text: "" },
+      },
+    ],
+  },
+  ...SERVICE_PAGES.map(serviceSection),
+);
