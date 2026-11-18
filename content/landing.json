@@ -68,14 +68,14 @@
     "connectLabel": "Connect"
   },
   "hero": {
-    "topLine": "SEBI REGISTERED RESEARCH ",
+    "topLine": "SEBI REGISTERED RESEARCH ANALYST",
     "titleLine1": "The market",
     "titleLine2": "doesn't reward",
     "titleHighlight": "the impulsive.",
     "support": "Precision-driven thinking. Disciplined execution. A different perspective on the markets.",
     "primaryButton": "Explore our approach",
     "secondaryButton": "Connect with us",
-    "tickerLabel": "ILLUSTRATIVE · NOT LIVE",
+    "tickerLabel": "",
     "ticker": [
       {
         "name": "NIFTY 50",
